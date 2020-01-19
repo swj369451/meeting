@@ -18,10 +18,13 @@ public class Meeting {
 //   会议名称
     private String title;
 
+//    设置长字符串类型
     @Basic(fetch = FetchType.LAZY)
     @Lob
 //    会议内容
     private String content;
+//    会议地址
+    private String place;
 //    会议头图片
     private String firstPicture;
 //    标记
@@ -58,6 +61,7 @@ public class Meeting {
     @OneToMany(mappedBy = "meeting")
     private List<Comment> comments = new ArrayList<>();
 
+//    设置Transient就不会更新到数据库
     @Transient
     private String tagIds;
 
