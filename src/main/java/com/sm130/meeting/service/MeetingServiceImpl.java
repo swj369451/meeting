@@ -5,12 +5,15 @@ import com.sm130.meeting.NotFoundException;
 import com.sm130.meeting.dao.MeetingRepository;
 import com.sm130.meeting.po.Meeting;
 import com.sm130.meeting.po.Type;
+import com.sm130.meeting.util.MarkdownUtils;
 import com.sm130.meeting.util.MyBeanUtils;
 import com.sm130.meeting.vo.MeetingQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,18 +37,17 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     @Override
     public Meeting getAndConvert(Long id) {
-//        Meeting meeting = meetingRepository.getOne(id);
-//        if (meeting == null) {
-//            throw new NotFoundException("该博客不存在");
-//        }
-//        Meeting b = new Meeting();
-//        BeanUtils.copyProperties(meeting,b);
-//        String content = b.getContent();
-//        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
-//
-//        meetingRepository.updateViews(id);
-//        return b;
-        return null;
+        Meeting meeting = meetingRepository.getOne(id);
+        if (meeting == null) {
+            throw new NotFoundException("该博客不存在");
+        }
+        Meeting b = new Meeting();
+        BeanUtils.copyProperties(meeting,b);
+        String content = b.getContent();
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+
+        meetingRepository.updateViews(id);
+        return b;
     }
 
 
@@ -96,8 +98,10 @@ public class MeetingServiceImpl implements MeetingService {
     public List<Meeting> listRecommendMeetingTop(Integer size) {
 //        Sort sort = new Sort(Sort.Direction.DESC,"updateTime");
 //        Pageable pageable = new PageRequest(0, size, sort);
-//        return meetingRepository.findTop(pageable);
-        return null;
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable= PageRequest.of(0, size, sort);
+        return meetingRepository.findTop(pageable);
     }
 
     @Override

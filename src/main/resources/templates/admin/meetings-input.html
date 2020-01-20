@@ -3,7 +3,7 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>博客发布</title>
+    <title>会议发布</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
@@ -39,8 +39,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="teal active item">发布</a>
-            <a href="#" class="item">列表</a>
+            <a href="#" th:href="@{/admin/meetings/input}" class="teal active item">发布</a>
+            <a href="#" th:href="@{/admin/meetings}" class="item">列表</a>
         </div>
     </div>
 </div>
@@ -48,12 +48,13 @@
 <!--中间内容-->
 <div class=" m-padded-tb-big">
     <div class="ui container">
-        <form id="meeting-form" action="#" th:action="@{/admin/meetings}" method="post" class="ui form">
+        <form id="meeting-form" action="#" th:object="${meeting}" th:action="@{/admin/meetings}" method="post"
+              class="ui form">
             <input type="hidden" name="published">
             <div class="required field">
                 <div class="ui left labeled input">
                     <div class="ui selection compact teal basic dropdown label">
-                        <input type="hidden" value="原创">
+                        <input type="hidden" value="原创" th:value="*{flag}">
                         <i class="dropdown icon"></i>
                         <!-- 这里可以选择会议，活动，班会 -->
                         <div class="text">类型</div>
@@ -66,22 +67,30 @@
                             <div class="item" data-value="翻译">班会</div>
                         </div>
                     </div>
-                    <input type="text" name="title" placeholder="标题">
+                    <input type="text" name="title" placeholder="标题" th:value="*{title}">
                 </div>
             </div>
 
+            <!--会议内容-->
             <div class="required field">
                 <div id="md-content" style="z-index: 1 !important;">
-                    <textarea placeholder="博客内容" name="content" style="display: none" th:text="*{content}"></textarea>
+                    <textarea placeholder="会议内容" name="content" style="display: none" th:text="*{content}"></textarea>
                 </div>
             </div>
 
+            <!--会议描述-->
+            <div class="required field">
+                    <textarea name="description" th:text="*{description}" placeholder="会议描述。。。"
+                              maxlength="200"></textarea>
+            </div>
+
+            <!--分类-->
             <div class="two fields">
                 <div class="required field">
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">分类</label>
                         <div class="ui fluid selection dropdown">
-                            <input type="hidden" name="type.id">
+                            <input type="hidden" name="type.id" th:value="*{type}!=null ? *{type.id}">
                             <i class="dropdown icon"></i>
                             <div class="default text">分类</div>
                             <div class="menu">
@@ -96,7 +105,7 @@
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">标签</label>
                         <div class="ui fluid selection multiple search  dropdown">
-                            <input type="hidden" name="tagIds">
+                            <input type="hidden" name="tagIds" th:value="*{tagIds}">
                             <i class="dropdown icon"></i>
                             <div class="default text">标签</div>
                             <div class="menu">
@@ -109,18 +118,20 @@
                 </div>
             </div>
 
+            <!--首图-->
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">首图</label>
-                    <input type="text" name="firstPicture" placeholder="首图引用地址">
+                    <input type="text" name="firstPicture" th:value="*{firstPicture}" placeholder="首图引用地址">
                 </div>
 
             </div>
 
+            <!--会议地址-->
             <div class="field">
                 <div class="ui left labeled input">
-                    <label class="ui teal basic label">会议地址</label>
-                    <input type="text" name="place" placeholder="填写会议的地址">
+                    <label class="ui teal basic label" >会议地址</label>
+                    <input type="text" name="place" th:value="*{place}" placeholder="填写会议的地址">
                 </div>
 
             </div>
@@ -128,25 +139,29 @@
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="recommend" name="recommend" checked class="hidden">
+                        <input type="checkbox" id="recommend" name="recommend" checked class="hidden"
+                               th:checked="*{recommend}">
                         <label for="recommend">推荐</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="ShareStatement" name="ShareStatement" class="hidden">
+                        <input type="checkbox" id="ShareStatement" name="ShareStatement" th:checked="*{ShareStatement}"
+                               class="hidden">
                         <label for="ShareStatement">转载声明</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="appreciation" name="appreciation" class="hidden">
+                        <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}"
+                               class="hidden">
                         <label for="appreciation">签到</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="commentabled" name="commentabled" class="hidden">
+                        <input type="checkbox" id="commentabled" name="commentabled" th:checked="*{commentabled}"
+                               class="hidden">
                         <label for="commentabled">评论</label>
                     </div>
                 </div>
@@ -213,13 +228,13 @@
 
     //初始化Markdown编辑器
     var contentEditor;
-    $(function() {
+    $(function () {
         contentEditor = editormd("md-content", {
-            width   : "100%",
-            height  : 640,
-            syncScrolling : "single",
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
 //        path    : "../static/lib/editormd/lib/"
-            path    : "/lib/editormd/lib/"
+            path: "/lib/editormd/lib/"
         });
     });
     $('.menu.toggle').click(function () {
@@ -258,10 +273,10 @@
                     prompt: '内容：请输入会议内容'
                 }]
             },
-            typeId : {
+            typeId: {
                 identifier: 'type.id',
                 rules: [{
-                    type : 'empty',
+                    type: 'empty',
                     prompt: '标题：请输入会议分类'
                 }]
             },
@@ -271,7 +286,14 @@
                     type: 'empty',
                     prompt: '请输入会议地址'
                 }]
-            }
+            },
+            description: {
+                identifier: 'description',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入会议描述'
+                }]
+            },
         }
     });
 

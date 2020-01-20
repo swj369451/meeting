@@ -66,14 +66,14 @@ public class MeetingController {
     }
 
 
-//    @GetMapping("/meetings/{id}/input")
-//    public String editInput(@PathVariable Long id, Model model) {
-//        setTypeAndTag(model);
-//        Meeting meeting = meetingService.getMeeting(id);
-//        meeting.init();
-//        model.addAttribute("meeting",meeting);
-//        return INPUT;
-//    }
+    @GetMapping("/meetings/{id}/input")
+    public String editInput(@PathVariable Long id, Model model) {
+        setTypeAndTag(model);
+        Meeting meeting = meetingService.getMeeting(id);
+        meeting.init();
+        model.addAttribute("meeting",meeting);
+        return INPUT;
+    }
 
 
 

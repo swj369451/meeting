@@ -10,7 +10,7 @@
 <body>
 
   <!--导航-->
-  <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+  <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
     <div class="ui container">
       <div class="ui inverted secondary stackable menu">
         <h2 class="ui teal header item">管理后台</h2>
@@ -39,8 +39,8 @@
   <div class="ui attached pointing menu">
     <div class="ui container">
       <div class="right menu">
-        <a href="#" class="item">发布</a>
-        <a href="#" class="teal active item">列表</a>
+        <a href="#" th:href="@{/admin/meetings/input}" class=" item">发布</a>
+        <a href="#" th:href="@{/admin/meetings}" class="teal active item">列表</a>
       </div>
     </div>
   </div>
@@ -89,6 +89,7 @@
           <th>标题</th>
           <th>类型</th>
           <th>推荐</th>
+          <th>状态</th>
           <th>更新时间</th>
           <th>操作</th>
         </tr>
@@ -99,7 +100,7 @@
           <td th:text="${meeting.title}">刻意练习清单</td>
           <td th:text="${meeting.type.name}">认知升级</td>
           <td th:text="${meeting.recommend}?'是':'否'">是</td>
-          <td th:text="${meeting.published}?'草稿':'发布'">草稿</td>
+          <td th:text="${meeting.published}?'发布':'草稿'">草稿</td>
           <td th:text="${meeting.updateTime}">2017-10-02 09:45</td>
           <td>
             <a href="#" th:href="@{/admin/meetings/{id}/input(id=${meeting.id})}" class="ui mini teal basic button">编辑</a>
