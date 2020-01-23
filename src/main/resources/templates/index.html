@@ -32,7 +32,6 @@
       <i class="sidebar icon"></i>
     </a>
   </nav>
-
   <!--中间内容-->
   <div  class="m-container m-padded-tb-big">
     <div class="ui container">
@@ -118,7 +117,7 @@
             <div class="ui secondary segment ">
               <i class="bookmark icon"></i>最新会议
             </div>
-            <div class="ui segment" th:each="meeting : ${meetings}">
+            <div class="ui segment" th:each="meeting:${meetings}">
               <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank" class="m-black m-text-thin" th:text="${#arrays.length(tag.meetings)}">召开第五次活动会议</a>
             </div>
           </div>
