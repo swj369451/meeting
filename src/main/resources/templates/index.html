@@ -27,6 +27,7 @@
         </div>
       </div>
     </div>
+
     <!-- 在手机端自适应的时候点击出现菜单栏 -->
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
       <i class="sidebar icon"></i>
@@ -117,8 +118,8 @@
             <div class="ui secondary segment ">
               <i class="bookmark icon"></i>最新会议
             </div>
-            <div class="ui segment" th:each="meeting:${meetings}">
-              <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank" class="m-black m-text-thin" th:text="${#arrays.length(tag.meetings)}">召开第五次活动会议</a>
+            <div class="ui segment" th:each="meeting : ${recommendmeetings}">
+              <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank" class="m-black m-text-thin" th:text="${meeting.title}">召开第五次活动会议</a>
             </div>
           </div>
 

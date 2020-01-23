@@ -25,6 +25,9 @@ public class Meeting {
     private String content;
 //    会议地址
     private String place;
+//    会议发起时间
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date time;
 //    会议头图片
     private String firstPicture;
 //    标记

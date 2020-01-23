@@ -41,7 +41,7 @@ public class IndexController {
         model.addAttribute("page",meetingService.listMeeting(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
         model.addAttribute("tags", tagService.listTagTop(10));
-        model.addAttribute("recommendMeetings", meetingService.listRecommendMeetingTop(8));
+        model.addAttribute("recommendmeetings", meetingService.listRecommendMeetingTop(8));
 //        session.setAttribute("user",null);
         return "index";
     }
