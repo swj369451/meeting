@@ -19,7 +19,7 @@
 <nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
-      <h2 class="ui teal header item">Blog</h2>
+      <h2 class="ui teal header item">Meeting</h2>
       <!--判断并添加class属性 th:classappend="${n==1} ? 'active' -->
       <a href="#" th:href="@{/}" class="m-item item m-mobile-hide " th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>首页</a>
       <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>分类</a>
@@ -34,6 +34,7 @@
             <i onclick="document.forms['search'].submit()" class="search link icon"></i>
           </div>
         </form>
+        <a class="ui labeled icon button inverted" th:href="@{/login}" style="margin-left: 50px"><i class="user icon"></i> 登录 </a>
       </div>
     </div>
   </div>
@@ -56,10 +57,10 @@
         </div>
       </div>
       <div class="three wide column" >
-        <h4 class="ui inverted header m-text-thin m-text-spaced " >最新博客</h4>
-        <div id="newblog-container">
-          <div class="ui inverted link list" th:fragment="newblogList">
-            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item m-text-thin" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事（User Story）</a>
+        <h4 class="ui inverted header m-text-thin m-text-spaced " >会议系统</h4>
+        <div id="newmeeting-container">
+          <div class="ui inverted link list" th:fragment="newmeetingList">
+            <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank" class="item m-text-thin" th:each="meeting : ${newmeetings}" th:text="${meeting.title}">用户故事（User Story）</a>
             <!--/*-->
             <a href="#" class="item m-text-thin">用户故事（User Story）</a>
             <a href="#" class="item m-text-thin">用户故事（User Story）</a>
@@ -75,8 +76,8 @@
         </div>
       </div>
       <div class="seven wide column">
-        <h4 class="ui inverted header m-text-thin m-text-spaced ">Blog</h4>
-        <p class="m-text-thin m-text-spaced m-opacity-mini" th:text="#{index.blogDescription}">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+        <h4 class="ui inverted header m-text-thin m-text-spaced ">Meeting</h4>
+        <p class="m-text-thin m-text-spaced m-opacity-mini" th:text="#{index.meetingDescription}">会议系统</p>
       </div>
     </div>
     <div class="ui inverted section divider"></div>
@@ -94,7 +95,7 @@
   <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
   <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
   <script>
-    $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    $('#newmeeting-container').load(/*[[@{/footer/newmeeting}]]*/"/footer/newmeeting");
   </script>
 </th:block>
 

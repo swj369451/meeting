@@ -28,6 +28,11 @@ public class IndexController {
     @Autowired
     private TagService tagService;
 
+    @GetMapping("/login")
+    public String login(){
+        return "admin/login";
+    }
+
     @GetMapping("/")
     public String index(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model) {

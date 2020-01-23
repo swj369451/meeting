@@ -52,7 +52,7 @@
         <input type="hidden" name="page">
         <div class="inline fields">
           <div class="field">
-            <input type="text" name="title" placeholder="会议主题">
+            <input id="meetingtitle" type="text" name="title" placeholder="会议主题">
           </div>
           <div class="field">
             <div class="ui labeled action input">
@@ -193,8 +193,9 @@
     $('#clear-btn')
         .on('click',function () {
             $('.ui.type.dropdown')
-                .dropdown('clear')
-        })
+                .dropdown('clear');
+            document.getElementById('meetingtitle').value='';
+        });
 
 
     function page(obj) {
