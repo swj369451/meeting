@@ -51,6 +51,7 @@
         <form id="meeting-form" action="#" th:object="${meeting}" th:action="@{/admin/meetings}" method="post"
               class="ui form">
             <input type="hidden" name="published">
+            <input type="hidden" name="id" th:value="*{id}">
             <div class="required field">
                 <div class="ui left labeled input">
                     <div class="ui selection compact teal basic dropdown label">

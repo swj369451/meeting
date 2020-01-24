@@ -38,6 +38,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model, HttpSession session) {
+
         model.addAttribute("page",meetingService.listMeeting(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
         model.addAttribute("tags", tagService.listTagTop(10));

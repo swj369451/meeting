@@ -10,16 +10,14 @@ import com.sm130.meeting.util.MyBeanUtils;
 import com.sm130.meeting.vo.MeetingQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -75,7 +73,18 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public Page<Meeting> listMeeting(Pageable pageable) {
-        return meetingRepository.findAll(pageable);
+        Page<Meeting> list = meetingRepository.findAll(new Specification<Meeting>() {
+
+            @Override
+            public Predicate toPredicate(Root<Meeting> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                Predicate p = cb.conjunction();
+//                判断是否发布
+                p = cb.and(p, cb.equal(root.get("published"), true));
+
+                return p;
+            }
+        }, pageable);
+        return list;
     }
 
     @Override
@@ -101,7 +110,13 @@ public class MeetingServiceImpl implements MeetingService {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
         Pageable pageable= PageRequest.of(0, size, sort);
-        return meetingRepository.findTop(pageable);
+        List<Meeting> list = meetingRepository.findTop(pageable).stream().filter((item) -> {
+            if (item.isPublished()) {
+                return true;
+            }
+            return false;
+        }).collect(Collectors.toList());
+        return list;
     }
 
     @Override
