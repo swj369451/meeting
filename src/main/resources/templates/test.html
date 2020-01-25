@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会议发布</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+
+    <link rel="stylesheet" href="css/dateTime.css" th:href="@{/css/dateTime.css}">
+</head>
+<body>
+
+<input type="text" placeholder="请选择日期和时间" id="datetime">
+
+<script type="text/javascript" src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" src="js/dateTime.min.js" th:src="@{/js/dateTime.min.js}"></script>
+<script type="text/javascript">
+
+    $("#datetime").datetime({
+        type:"datetime",
+        value:[2019,7,15,15,30]
+    })
+</script>
+</body>
+</html>

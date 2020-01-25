@@ -25,8 +25,9 @@ public class User {
     private String email;
 //    头像
     private String avatar;
-//    类型
+//    类型,1是普通用户,2是管理员
     private Integer type;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)

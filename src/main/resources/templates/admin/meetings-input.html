@@ -137,6 +137,7 @@
             </div>
 
             <!--会议日期-->
+            <!--<input type="text" placeholder="请选择日期和时间" id="datetime">-->
             <!--<div class="field">-->
                 <!--<div class="ui left labeled input">-->
                     <!--<label class="ui teal basic label">会议日期</label>-->
@@ -156,16 +157,16 @@
                     <div class="ui checkbox">
                         <input type="checkbox" id="ShareStatement" name="ShareStatement" th:checked="*{ShareStatement}"
                                class="hidden">
-                        <label for="ShareStatement">转载声明</label>
+                        <label for="ShareStatement">发布人信息</label>
                     </div>
                 </div>
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}"
-                               class="hidden">
-                        <label for="appreciation">签到</label>
-                    </div>
-                </div>
+                <!--<div class="field">-->
+                    <!--<div class="ui checkbox">-->
+                        <!--<input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}"-->
+                               <!--class="hidden">-->
+                        <!--<label for="appreciation">签到</label>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="field">
                     <div class="ui checkbox">
                         <input type="checkbox" id="commentabled" name="commentabled" th:checked="*{commentabled}"
@@ -186,7 +187,6 @@
         </form>
     </div>
 </div>
-
 <br>
 <br>
 <!--底部footer-->
@@ -304,7 +304,6 @@
             },
         }
     });
-
 </script>
 </body>
 </html>

@@ -47,6 +47,10 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
 
     @PostMapping("/search")
     public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,

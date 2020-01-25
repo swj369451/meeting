@@ -34,7 +34,7 @@ public class LoginController {
                         RedirectAttributes attributes) {
         User user = userService.checkUser(username, password);
         if (user != null) {
-            user.setPassword(null);
+//            user.setPassword(null);
             session.setAttribute("user",user);
             return "admin/index";
         } else {

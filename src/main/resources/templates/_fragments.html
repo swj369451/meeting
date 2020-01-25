@@ -32,7 +32,7 @@
             <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i
                     class="mini info icon"></i>关于我</a>
             <a href="#" th:href="@{/admin/meetings}" class="m-item item m-mobile-hide" th:classappend="${n==6} ? 'active'"><i
-                    class="mini info icon"></i>个人会议</a>
+                    class="mini archive icon"></i>会议管理</a>
             <div class="right m-item item m-mobile-hide">
                 <!--搜索的表单-->
                 <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
@@ -121,6 +121,15 @@
         $('#newmeeting-container').load(/*[[@{/footer/newmeeting}]]*/"/footer/newmeeting");
     </script>
 
+    <script>
+        $('.menu.toggle').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        });
+
+        $('.ui.dropdown').dropdown({
+            on: 'hover'
+        });
+    </script>
 </th:block>
 
 </body>

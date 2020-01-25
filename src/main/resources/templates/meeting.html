@@ -50,7 +50,7 @@
           <i class="calendar icon" ></i> <span th:text="${#dates.format(meeting.updateTime,'yyyy-MM-dd')}">2017-10-01</span>
         </div>
         <div class="item">
-          <i class="eye icon"></i> <span th:text="${meeting.views}">2342</span>
+          <i class="location arrow icon"></i><span th:text="${meeting.place}">2342</span>
         </div>
       </div>
     </div>
@@ -60,9 +60,9 @@
     </div>
     <div class="ui  attached padded segment">
       <!--内容-->
-      <div class="ui right aligned basic segment">
-        <div class="ui orange basic label" th:text="${meeting.flag}">原创</div>
-      </div>
+      <!--<div class="ui right aligned basic segment">-->
+        <!--<div class="ui orange basic label" th:text="${meeting.flag}">原创</div>-->
+      <!--</div>-->
       <!-- 会议内容 -->
       <h2 class="ui center aligned header" th:text="${meeting.title}">这次会议的主题是开发一个毕业设计</h2>
       <br>
@@ -78,9 +78,9 @@
 
       <div th:if="${meeting.appreciation}">
         <!--已读-->
-        <div class="ui center aligned basic segment" th:if="${meeting.appreciation}">
-          <button id="payButton" class="ui orange basic circular button">已读</button>
-        </div>
+        <!--<div class="ui center aligned basic segment" th:if="${meeting.appreciation}">-->
+          <!--<button id="payButton" class="ui orange basic circular button">已读</button>-->
+        <!--</div>-->
 
         <div class="ui payQR flowing popup transition hidden">
           <div class="ui orange basic label">
@@ -105,13 +105,13 @@
       <div class="ui middle aligned grid">
         <div class="eleven wide column">
           <ui class="list">
-            <li>作者：<span th:text="${meeting.user.nickname}">李仁密</span></li>
+            <li>会议发起者：<span th:text="${meeting.user.nickname}">李仁密</span></li>
             <li>发布时间：<span th:text="${#dates.format(meeting.updateTime,'yyyy-MM-dd HH:mm')}">2017-10-02 09:08</span></li>
           </ui>
         </div>
-        <div class="five wide column">
-          <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}"  alt="" class="ui right floated rounded bordered image" style="width: 110px">
-        </div>
+        <!--<div class="five wide column">-->
+          <!--<img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}"  alt="" class="ui right floated rounded bordered image" style="width: 110px">-->
+        <!--</div>-->
       </div>
     </div>
     <div  class="ui bottom attached segment" th:if="${meeting.commentabled}">
