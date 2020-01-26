@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 
 @Controller
@@ -72,20 +73,28 @@ public class MeetingController {
         Meeting meeting = meetingService.getMeeting(id);
         meeting.init();
         model.addAttribute("meeting",meeting);
+        model.addAttribute("h",meeting.getTime().getHours());
+        model.addAttribute("m",meeting.getTime().getMinutes());
         return INPUT;
     }
 
 
 
     @PostMapping("/meetings")
-    public String post(Meeting meeting, RedirectAttributes attributes, HttpSession session) {
+    public String post(Meeting meeting, RedirectAttributes attributes, HttpSession session,int h,int m) {
         meeting.setUser((User) session.getAttribute("user"));
         meeting.setType(typeService.getType(meeting.getType().getId()));
         meeting.setTags(tagService.listTag(meeting.getTagIds()));
         Meeting b;
         if (meeting.getId() == null) {
+            String[] split = meeting.getTimes().split("-");
+            Date time = new Date(Integer.parseInt(split[0])-1900,Integer.parseInt(split[1]),Integer.parseInt(split[2]),h,m);
+            meeting.setTime(time);
             b =  meetingService.saveMeeting(meeting);
         } else {
+            String[] split = meeting.getTimes().split("-");
+            Date time = new Date(Integer.parseInt(split[0])-1900,Integer.parseInt(split[1]),Integer.parseInt(split[2]),h,m);
+            meeting.setTime(time);
             b = meetingService.updateMeeting(meeting.getId(), meeting);
         }
 

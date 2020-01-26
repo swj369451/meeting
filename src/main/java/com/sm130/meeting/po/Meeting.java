@@ -26,8 +26,8 @@ public class Meeting {
 //    会议地址
     private String place;
 //    会议发起时间
-    @Temporal(TemporalType.TIMESTAMP)
     private Date time;
+    private String times;
 //    会议头图片
     private String firstPicture;
 //    标记
@@ -42,7 +42,7 @@ public class Meeting {
     private boolean commentabled;
 //    是否发布
     private boolean published;
-//    是否推荐
+//    是否标记
     private boolean recommend;
     @Temporal(TemporalType.TIMESTAMP)
 //    创建时间

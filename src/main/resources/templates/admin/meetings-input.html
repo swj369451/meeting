@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
+
 </head>
 <body>
 
@@ -137,20 +138,64 @@
             </div>
 
             <!--会议日期-->
-            <!--<input type="text" placeholder="请选择日期和时间" id="datetime">-->
-            <!--<div class="field">-->
-                <!--<div class="ui left labeled input">-->
-                    <!--<label class="ui teal basic label">会议日期</label>-->
-                    <!--<input type="datetime-local" name="time" th:value="*{time}" placeholder="填写会议的日期">-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">会议日期</label>
+                    <!--格式正确才能回显-->
+                    <input type="date" name="times" th:value="${#dates.format(meeting.time,'yyyy-MM-dd')}" placeholder="填写会议的日期">
+                    <select name="h" style="width: 100px" th:selected="${h}">
+                        　　　　<option value="0" th:selected="${h}==0"  selected>00</option>
+                        　　　　<option value="1" th:selected="${h}==1">01</option>
+                        　　　　<option value="2" th:selected="${h}==2">02</option>
+                        　　　　<option value="3" th:selected="${h}==3">03</option>
+                        　　　　<option value="4" th:selected="${h}==4">04</option>
+                        　　　　<option value="5" th:selected="${h}==5">05</option>
+                        　　　　<option value="6" th:selected="${h}==6">06</option>
+                        　　　　<option value="7" th:selected="${h}==7">07</option>
+                        　　　　<option value="8" th:selected="${h}==8">08</option>
+                        　　　　<option value="9" th:selected="${h}==9">09</option>
+                        　　　　<option value="10" th:selected="${h}==10">10</option>
+                        　　　　<option value="11" th:selected="${h}==11">11</option>
+                        　　　　<option value="12" th:selected="${h}==12">12</option>
+                        　　　　<option value="13" th:selected="${h}==13">13</option>
+                        　　　　<option value="14" th:selected="${h}==14">14</option>
+                        　　　　<option value="15" th:selected="${h}==15">15</option>
+                        　　　　<option value="16" th:selected="${h}==16">16</option>
+                        　　　　<option value="17" th:selected="${h}==17">17</option>
+                        　　　　<option value="18" th:selected="${h}==18">18</option>
+                        　　　　<option value="19" th:selected="${h}==19">19</option>
+                        　　　　<option value="20" th:selected="${h}==20">20</option>
+                        　　　　<option value="21" th:selected="${h}==21">21</option>
+                        　　　　<option value="22" th:selected="${h}==22">22</option>
+                        　　　　<option value="23" th:selected="${h}==23">23</option>
+                        　　　　
+                    </select>
+                    <label class="ui teal basic label">时</label>
+                    <select name="m" style="width: 100px">
+                        　　　　<option value="0" th:selected="${m}==0" selected>00</option>
+                        　　　　<option value="5" th:selected="${m}==5">05</option>
+                        　　　　<option value="10" th:selected="${m}==10">10</option>
+                        　　　　<option value="15" th:selected="${m}==15">15</option>
+                        　　　　<option value="20" th:selected="${m}==20">20</option>
+                        　　　　<option value="25" th:selected="${m}==25">25</option>
+                        　　　　<option value="30" th:selected="${m}==30">30</option>
+                        　　　　<option value="35" th:selected="${m}==35">35</option>
+                        　　　　<option value="40" th:selected="${m}==40">40</option>
+                        　　　　<option value="45" th:selected="${m}==45">45</option>
+                        　　　　<option value="50" th:selected="${m}==50">50</option>
+                        　　　　<option value="55" th:selected="${m}==55">55</option>
+                    </select>
+                    <label class="ui teal basic label">分</label>
+                </div>
+            </div>
 
+            <!--紧急-->
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
                         <input type="checkbox" id="recommend" name="recommend" checked class="hidden"
                                th:checked="*{recommend}">
-                        <label for="recommend">推荐</label>
+                        <label for="recommend">紧急</label>
                     </div>
                 </div>
                 <div class="field">
@@ -231,7 +276,6 @@
 <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 <!--/*/</th:block>/*/-->
 
-
 <script>
 
     //初始化Markdown编辑器
@@ -300,6 +344,13 @@
                 rules: [{
                     type: 'empty',
                     prompt: '请输入会议描述'
+                }]
+            },
+            time: {
+                identifier: 'times',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入会议时间'
                 }]
             },
         }
