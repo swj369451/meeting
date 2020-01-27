@@ -73,7 +73,7 @@
                         </div>
                         <br/>
                         <div class="item">
-                          <i class="calendar alternate outline icon"></i><span th:text="${#dates.format(meeting.time,'yyyy-MM-dd')}"> 2017-10-01</span>
+                          <i class="calendar alternate outline icon"></i><span th:text="${#dates.format(meeting.time,'yyyy-MM-dd HH:mm')}"> 2017-10-01</span>
                         </div>
                         <br/>
                         <div class="item">
@@ -118,10 +118,14 @@
           <!--最新标记会议-->
           <div class="ui segments m-margin-top-large">
             <div class="ui secondary segment ">
-              <i class="bookmark icon"></i>最新会议
+              <i class="bookmark icon"></i>紧急会议
             </div>
             <div class="ui segment" th:each="meeting : ${recommendmeetings}">
               <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank" class="m-black m-text-thin" th:text="${meeting.title}">召开第五次活动会议</a>
+              <div>
+                <span th:text="${#dates.format(meeting.time,'yyyy-MM-dd HH:mm')}"> 2017-10-01</span>
+
+              </div>
             </div>
           </div>
 

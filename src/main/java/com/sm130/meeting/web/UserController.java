@@ -66,6 +66,7 @@ public class UserController {
     public String adduser(@Valid User user) {
         user.setUpdateTime(new Date());
         user.setCreateTime(new Date());
+        user.setAvatar("https://unsplash.it/800/600?image=1005");
         userService.save(user);
         return "redirect:/users";
     }

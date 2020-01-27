@@ -2,6 +2,7 @@ package com.sm130.meeting.service;
 
 import com.sm130.meeting.dao.CommentRepository;
 import com.sm130.meeting.po.Comment;
+import com.sm130.meeting.po.Meeting;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -42,6 +43,11 @@ public class CommentServiceImpl implements CommentService {
         }
         comment.setCreateTime(new Date());
         return commentRepository.save(comment);
+    }
+
+    @Override
+    public void deleteByMeeting(Meeting meeting) {
+        commentRepository.deleteByMeeting(meeting);
     }
 
 

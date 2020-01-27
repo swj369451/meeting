@@ -27,6 +27,9 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     private MeetingRepository meetingRepository;
 
+    @Autowired
+    private CommentService commentService;
+
     @Override
     public Meeting getMeeting(Long id) {
         return meetingRepository.getOne(id);
@@ -152,7 +155,7 @@ public class MeetingServiceImpl implements MeetingService {
     public Meeting updateMeeting(Long id, Meeting meeting) {
         Meeting b = meetingRepository.getOne(id);
         if (b == null) {
-            throw new NotFoundException("该博客不存在");
+            throw new NotFoundException("该会议不存在");
         }
         BeanUtils.copyProperties(meeting,b, MyBeanUtils.getNullPropertyNames(meeting));
         b.setUpdateTime(new Date());
@@ -162,6 +165,8 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     @Override
     public void deleteMeeting(Long id) {
+        Meeting meeting = meetingRepository.findById(id).get();
+        commentService.deleteByMeeting(meeting);
         meetingRepository.deleteById(id);
     }
 }
