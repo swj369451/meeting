@@ -48,8 +48,8 @@
                 <div class="right m-item m-mobile-hide menu" th:if="${session.user}!=null">
                     <div class="ui dropdown item">
                         <div class="text">
-                            <img class="ui avatar image" src="https://unsplash.it/100/100?image=1005"
-                                 th:src="@{${session.user.avatar}}">
+                            <!--<img class="ui avatar image" src="https://unsplash.it/100/100?image=1005"-->
+                                 <!--th:src="@{${session.user.avatar}}">-->
                             <span th:text="${session.user.nickname}">用户名称</span>
                         </div>
                         <i class="dropdown icon"></i>
@@ -74,7 +74,7 @@
     <div class="ui center aligned container">
         <div class="ui inverted divided stackable grid">
             <div class="three wide column">
-                <h4 class="ui inverted header m-text-thin m-text-spaced ">其他会议</h4>
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">紧急会议</h4>
                 <div id="newmeeting-container">
                     <div class="ui inverted link list" th:fragment="newmeetingList">
                         <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank"
@@ -101,7 +101,7 @@
         </div>
         <div class="ui inverted section divider"></div>
         <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 - <span
-                th:text="${#dates.year(#dates.createNow())}">2017</span> Lirenmi Designed by Lirenmi</p>
+                th:text="${#dates.year(#dates.createNow())}">2017</span> 130</p>
     </div>
 
 </footer>

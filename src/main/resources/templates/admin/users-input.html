@@ -26,7 +26,7 @@
     <div class="ui container">
       <form action="#" method="post"  th:object="${user}" th:action="*{id}==null ? @{/admin/tags} : @{/users/{id}(id=*{id})} "  class="ui form">
         <input type="hidden" name="id" th:value="*{id}">
-        <input type="hidden" name="avatar" th:value="*{avatar}">
+        <!--<input type="hidden" name="avatar" th:value="*{avatar}">-->
         <div class=" field">
           <div class="ui left labeled input">
             <label class="ui teal basic label">id</label>

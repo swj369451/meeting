@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/meeting?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8
-    username: root
-    password: root
+    url: jdbc:mysql://rm-bp15gguwu821c7e48bo.mysql.rds.aliyuncs.com:3306/meeting?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8
+    username: mysql123
+    password: Mysql123
   jpa:
     hibernate:
 #      当实体类发生改变的时候，同步更新你的表结构。如果你已经确定了表结构就可以设为none
@@ -17,3 +17,5 @@ logging:
     com.sm130: debug
 #    设置日志存储路径
   file: log/meeting.log
+server:
+  port: 8085

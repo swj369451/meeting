@@ -1,6 +1,7 @@
 package com.sm130.meeting.web;
 
 import com.sm130.meeting.po.Comment;
+import com.sm130.meeting.po.Meeting;
 import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.CommentService;
 import com.sm130.meeting.service.MeetingService;
@@ -37,9 +38,11 @@ public class CommentController {
     @PostMapping("/comments")
     public String post(Comment comment, HttpSession session) {
         Long meetingId = comment.getMeeting().getId();
-        comment.setMeeting(meetingService.getMeeting(meetingId));
+        Meeting meeting = meetingService.getMeeting(meetingId);
+        comment.setMeeting(meeting);
         User user = (User) session.getAttribute("user");
-        if (user != null) {
+
+        if (user.getId()==meeting.getUser().getId()) {
             comment.setAvatar(user.getAvatar());
             comment.setAdminComment(true);
         } else {
