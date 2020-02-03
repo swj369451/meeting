@@ -8,4 +8,5 @@ public interface DetailService {
 
     Detail save(Detail detail);
     Page<Detail> list(Pageable pageable);
+    Page<Detail> listByUserId(Pageable pageable,Long userId);
 }

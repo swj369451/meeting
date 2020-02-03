@@ -90,6 +90,9 @@ public class MeetingController {
             String[] split = meeting.getTimes().split("-");
             Date time = new Date(Integer.parseInt(split[0])-1900,Integer.parseInt(split[1]),Integer.parseInt(split[2]),h,m);
             meeting.setTime(time);
+            if(meeting.getFirstPicture()==null){
+                meeting.setFirstPicture("https://i.picsum.photos/id/167/728/485.jpg");
+            }
             b =  meetingService.saveMeeting(meeting);
         } else {
             String[] split = meeting.getTimes().split("-");

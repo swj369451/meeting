@@ -23,32 +23,30 @@
   <!--中间内容-->
   <div  class="m-container-small m-padded-tb-big">
     <div class="ui container">
-      <!--<div class="ui segment form">-->
-        <!--<input type="hidden" name="page">-->
-        <!--&lt;!&ndash;<div class="inline fields">&ndash;&gt;-->
-          <!--&lt;!&ndash;<div class="field">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="ui labeled action input">&ndash;&gt;-->
-              <!--&lt;!&ndash;<div class="ui type selection dropdown">&ndash;&gt;-->
-                <!--&lt;!&ndash;<input type="hidden" name="typeId">&ndash;&gt;-->
-                <!--&lt;!&ndash;<i class="dropdown icon"></i>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="default text">分类</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="menu">&ndash;&gt;-->
-                  <!--&lt;!&ndash;&lt;!&ndash;<div th:each="type:${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">分类</div>&ndash;&gt;&ndash;&gt;-->
-                  <!--&lt;!&ndash;<div class="item" data-value="1">分类</div>&ndash;&gt;-->
+      <div class="ui segment form">
+        <input type="hidden" name="page">
+        <div class="inline fields">
+          <div class="field">
+            <div class="ui labeled action input">
+              <div class="ui type selection dropdown">
+                <input type="hidden" name="typeId">
+                <i class="dropdown icon"></i>
+                <div class="default text">分类</div>
+                <div class="menu">
+                  <div th:each="user:${users}" class="item" data-value="1" th:data-value="${user.id}" th:text="${user.nickname}">分类</div>
+                </div>
+              </div>
+              <buttion id="clear-btn" class="ui compact button">clear</buttion>
+            </div>
 
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-              <!--&lt;!&ndash;</div>&ndash;&gt;-->
-              <!--&lt;!&ndash;<buttion id="clear-btn" class="ui compact button">clear</buttion>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-          <!--&lt;!&ndash;<div class="field">&ndash;&gt;-->
-            <!--&lt;!&ndash;<button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>&ndash;&gt;-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--</div>-->
+          </div>
+          <div class="field">
+            <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+          </div>
+        </div>
+      </div>
       <div id="table-container">
-        <table class="ui celled table">
+        <table th:fragment="detailList" class="ui celled table">
           <thead>
           <tr>
             <th>序列</th>
@@ -120,6 +118,16 @@
                 .dropdown('clear');
             document.getElementById('meetingtitle').value='';
         });
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddate();
+    });
+    function loaddate() {
+        $("#table-container").load(/*[[@{/detail/search}]]*/"/detail/search",{
+            typeId : $("[name='typeId']").val(),
+            page : $("[name='page']").val()
+        });
+    }
   </script>
 </body>
 </html>
