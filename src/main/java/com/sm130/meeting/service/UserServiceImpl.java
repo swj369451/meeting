@@ -57,5 +57,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public List<User> listUsers() {
+        List<User> users = userRepository.findAll();
+        users.sort((a,b) -> a.getUpdateTime().compareTo(b.getUpdateTime()));
+        return users;
+    }
 
 }

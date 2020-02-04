@@ -37,14 +37,13 @@
   <div  class="m-container m-padded-tb-big">
     <div class="ui container">
       <div class="ui stackable grid">
-
         <!--左边博客列表-->
         <div class="eleven wide column">
           <!--header-->
           <div class="ui top attached segment">
             <div class="ui middle aligned two column grid">
               <div class="column">
-                <h3 class="ui teal header">会议</h3>
+                <h3 class="ui teal header">最新发布的会议</h3>
               </div>
               <div class="right aligned column">
                 共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}"> 14 </h2> 个会议
@@ -54,7 +53,6 @@
           <!--content-->
           <!-- 会议主体部分 -->
           <div class="ui attached  segment">
-
             <div class="ui padded vertical segment m-padded-tb-large" th:each="meeting : ${page.content}">
               <!-- mobile reversed在手机端能反转，让图片和文字顺序反转 -->
               <div class="ui middle aligned mobile reversed stackable grid" >
@@ -73,11 +71,11 @@
                         </div>
                         <br/>
                         <div class="item">
-                          <i class="calendar alternate outline icon"></i><span th:text="${#dates.format(meeting.time,'yyyy-MM-dd HH:mm')}"> 2017-10-01</span>
+                          <i class="calendar alternate outline icon"></i><span th:text="|会议时间: ${#dates.format(meeting.time,'yyyy-MM-dd HH:mm')}|"> 2017-10-01</span>
                         </div>
                         <br/>
                         <div class="item">
-                          <i class="location arrow icon"></i><span th:text="${meeting.place}">2342</span>
+                          <i class="location arrow icon"></i><span th:text="|会议地址：${meeting.place}|">2342</span>
                         </div>
                       </div>
                     </div>
@@ -123,9 +121,27 @@
             <div class="ui segment" th:each="meeting : ${recommendmeetings}">
               <a href="#" th:href="@{/meeting/{id}(id=${meeting.id})}" target="_blank" class="m-black m-text-thin" th:text="${meeting.title}">召开第五次活动会议</a>
               <div>
-                <span th:text="${#dates.format(meeting.time,'yyyy-MM-dd HH:mm')}"> 2017-10-01</span>
+                <span th:text="${#dates.format(meeting.time,'yyyy-MM-dd HH:mm')}"> 2017-10-01</span><br/>
+                <span th:text="${meeting.place}">会议地址</span>
 
               </div>
+            </div>
+          </div>
+
+          <!--用户-->
+          <div class="ui segments m-margin-top-large">
+            <div class="ui secondary segment">
+              <div class="ui two column grid">
+                <div class="column">
+                  <i class="tags icon"></i>最近登录用户
+                </div>
+              </div>
+            </div>
+            <div class="ui segment" th:each="user : ${users}">
+              <!--<div class="ui teal basic left pointing label m-margin-tb-tiny" >-->
+                <span class="detail" th:text="|昵称：${user.nickname}|">方法论</span> <br/>
+                <span class="detail" th:text="|登录时间：${#dates.format(user.updateTime,'yyyy-MM-dd HH:mm')}|">23</span>
+              <!--<div/>-->
             </div>
           </div>
 
@@ -169,6 +185,7 @@
               </a>
             </div>
           </div>
+
 
           <!--二维码-->
           <!--<h4 class="ui horizontal divider header m-margin-top-large">手机二维码</h4>-->

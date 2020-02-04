@@ -31,9 +31,9 @@
               <div class="ui type selection dropdown">
                 <input type="hidden" name="typeId">
                 <i class="dropdown icon"></i>
-                <div class="default text">分类</div>
+                <div class="default text">选择用户</div>
                 <div class="menu">
-                  <div th:each="user:${users}" class="item" data-value="1" th:data-value="${user.id}" th:text="${user.nickname}">分类</div>
+                  <div th:each="user:${users}" class="item" data-value="1" th:data-value="${user.id}" th:text="${user.nickname}">选择用户</div>
                 </div>
               </div>
               <buttion id="clear-btn" class="ui compact button">clear</buttion>

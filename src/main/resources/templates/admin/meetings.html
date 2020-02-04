@@ -35,6 +35,7 @@
   <!--中间内容-->
   <div  class="m-container-small m-padded-tb-big">
     <div class="ui container">
+      <!--搜索表单-->
       <div class="ui segment form">
         <input type="hidden" name="page">
         <div class="inline fields">
@@ -88,7 +89,7 @@
           <td th:text="${meeting.type.name}">认知升级</td>
           <td th:text="${meeting.recommend}?'是':'否'">是</td>
           <td th:text="${meeting.published}?'发布':'草稿'">草稿</td>
-          <td th:text="${meeting.updateTime}">2017-10-02 09:45</td>
+          <td th:text="${#dates.format(meeting.updateTime,'yyyy-MM-dd HH:mm')}">2017-10-02 09:45</td>
           <td>
             <a href="#" th:href="@{/admin/meetings/{id}/input(id=${meeting.id})}" class="ui mini teal basic button">编辑</a>
             <a href="#" th:href="@{/admin/meetings/{id}/delete(id=${meeting.id})}" class="ui mini red basic button">删除</a>

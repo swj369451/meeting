@@ -4,6 +4,7 @@ package com.sm130.meeting.web;
 import com.sm130.meeting.service.MeetingService;
 import com.sm130.meeting.service.TagService;
 import com.sm130.meeting.service.TypeService;
+import com.sm130.meeting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,9 @@ public class IndexController {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/login")
     public String login(){
         return "admin/login";
@@ -43,13 +47,14 @@ public class IndexController {
         model.addAttribute("types", typeService.listTypeTop(6));
         model.addAttribute("tags", tagService.listTagTop(10));
         model.addAttribute("recommendmeetings", meetingService.listRecommendMeetingTop(8));
+        model.addAttribute("users",userService.listUsers());
 //        session.setAttribute("user",null);
         return "index";
     }
 
     @GetMapping("/test")
     public String test() {
-        return "test";
+        return "room";
     }
 
     @PostMapping("/search")
