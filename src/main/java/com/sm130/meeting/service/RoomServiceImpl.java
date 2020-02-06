@@ -28,7 +28,9 @@ public class RoomServiceImpl implements RoomService {
         }
         List<Room> byQuery = roomRepository.findByQuery("%"+title+"%");
         List<Room> collect = byQuery.stream().filter((a) -> {
-            if(typeId=="1" && a.getNumber()>0 && a.getNumber()<=10){
+            if(typeId==""){
+                return true;
+            }else if(typeId=="1" && a.getNumber()>0 && a.getNumber()<=10){
                 return true;
             }else if(typeId.equals("2")&& a.getNumber()>10 && a.getNumber()<50){
                 return true;
@@ -46,5 +48,10 @@ public class RoomServiceImpl implements RoomService {
 
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public Room getById(Long roomId) {
+        return roomRepository.findById(roomId).get();
     }
 }

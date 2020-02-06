@@ -14,6 +14,12 @@
 </nav>
 <!--中间内容-->
 <div class="m-container-large m-padded-tb-big">
+    <!--申请成功提醒-->
+    <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+        <i class="close icon"></i>
+        <div class="header">提示：</div>
+        <p th:text="${message}">恭喜，操作成功！</p>
+    </div>
 
     <div class="ui stackable grid">
         <!--左边博客列表-->
@@ -24,9 +30,9 @@
                     <div class="column">
                         <h3 class="ui teal header">会议室</h3>
                     </div>
-                    <div class="right aligned column">
-                        共 <h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2> 个会议室
-                    </div>
+                    <!--<div class="right aligned column">-->
+                        <!--共 <h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2> 个会议室-->
+                    <!--</div>-->
                 </div>
             </div>
             <!--搜索表单-->
@@ -72,13 +78,16 @@
                             <div class="content">
                                 <div class="header"><h3 th:text="${room.name}">会议室名称</h3></div>
                                 <div class="meta">
-                                    <a>好友</a>
+                                    <span th:text="|会议管理员：${room.nickname}|"></span>
                                 </div>
                                 <div class="description"><span th:text="|简介：${room.description}|">会议室简介</span></div>
                                 <div class="description"><span th:text="|地址：${room.place}|">会议室地址</span></div>
                             </div>
                             <div class="extra content">
-                                <span class="right floated"><button class="ui primary button">申请 </button></span>
+                                <form th:action="@{/room/apply}" method="post">
+                                    <input type="hidden" name="roomid" th:value="${room.id}">
+                                    <span class="right floated"><button class="ui primary button" type="submit">申请 </button></span>
+                                </form>
                                 <span><i class="user icon"></i> 可容纳<span th:text="${room.number}">10</span>人 </span>
                                 <span th:if="${room.projector}"><i class="user icon"></i> 投影仪 </span>
                             </div>
@@ -124,6 +133,13 @@
             typeId : $("[name='typeId']").val()
         });
     }
+    //消息提示关闭初始化
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
 </script>
 </body>
 </html>

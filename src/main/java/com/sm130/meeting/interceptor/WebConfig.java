@@ -12,6 +12,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/admin/**")
                 .addPathPatterns("/about")
+                .addPathPatterns("/room/apply")
                 .excludePathPatterns("/admin")
                 .excludePathPatterns("/admin/login");
 

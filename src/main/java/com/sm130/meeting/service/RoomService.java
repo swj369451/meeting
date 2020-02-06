@@ -9,4 +9,6 @@ public interface RoomService {
     List<Room> getAll();
 
     List<Room> getAllBySearch(String title,String typeId);
+
+    Room getById(Long roomId);
 }

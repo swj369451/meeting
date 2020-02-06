@@ -39,4 +39,10 @@ public class Room {
 
 //    投影仪
     private Boolean projector;
+
+//    用户id
+    private Long userId;
+
+//    用户昵称
+    private String nickname;
 }
