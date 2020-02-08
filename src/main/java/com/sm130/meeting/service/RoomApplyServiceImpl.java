@@ -5,6 +5,8 @@ import com.sm130.meeting.po.RoomApply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class RoomApplyServiceImpl implements RoomApplyService {
@@ -16,5 +18,10 @@ public class RoomApplyServiceImpl implements RoomApplyService {
     @Override
     public void save(RoomApply roomApply) {
         roomApplyRepository.save(roomApply);
+    }
+
+    @Override
+    public List<RoomApply> list() {
+        return roomApplyRepository.findAll();
     }
 }

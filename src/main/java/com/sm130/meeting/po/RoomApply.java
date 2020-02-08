@@ -20,14 +20,15 @@ public class RoomApply {
 //    申请时间
     private Date time;
 
-
 //    申请人Id
-    private Long userId;
+    private Long applyUserId;
 
-//    是否通过
-    private Boolean permission;
+//    会议室Id
+    private Long roomId;
 
-//  会议申请人
-    @Transient
-    private User user;
+//    管理员id
+    private Long managerId;
+
+//    是否通过0没决定，1通过，2不通过
+    private Integer permission;
 }

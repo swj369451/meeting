@@ -134,6 +134,9 @@
                                             <!--<label>我同意本条款和条件</label>-->
                                         <!--</div>-->
                                     <!--</div>-->
+                                    <input type="hidden" name="roomid" th:value="${room.id}">
+                                    <input type="hidden" name="managerid" th:value="${room.userId}">
+                                    <input type="hidden" name="roomname" th:value="${room.name}">
                                     <button class="ui teal button" type="submit">提交</button>
                                 </form>
                             </div>
@@ -178,6 +181,25 @@
             typeId: $("[name='typeId']").val()
         });
     }
+    // 提示输入项有错误
+    $('.ui.form').form({
+        fields: {
+            content: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: '标题：请输入申请内容'
+                }]
+            },
+            time: {
+                identifier: 'time',
+                rules: [{
+                    type: 'empty',
+                    prompt: '标题：请输入申请到期时间'
+                }]
+            },
+        }
+    });
 </script>
 </body>
 </html>
