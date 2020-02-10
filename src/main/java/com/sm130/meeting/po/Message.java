@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "t_message")
-@AllArgsConstructor
+@AllArgsConstructor()
 @NoArgsConstructor
 public class Message {
 
@@ -33,5 +33,11 @@ public class Message {
 //    消息处理结果0未处理，1允许，2拒绝
     private Long result;
 
+//    消息类型，0会议室申请
+    private Long type;
+
     private Date createTime;
+
+//    设置关联的表
+    private Long relate;
 }

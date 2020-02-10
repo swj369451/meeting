@@ -1,21 +1,22 @@
 package com.sm130.meeting;
 
-import com.sm130.meeting.service.RoomService;
+import com.sm130.meeting.util.DateUtils;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.Date;
 
 @SpringBootTest
 //@WebAppConfiguration指定加载 ApplicationContext
 @WebAppConfiguration
 class MeetingApplicationTests {
 
-    @Autowired
-    private RoomService roomService;
 
     @Test
     void contextLoads() {
+        Date date = DateUtils.String2Date("2020-02-14");
+        return;
     }
 
 

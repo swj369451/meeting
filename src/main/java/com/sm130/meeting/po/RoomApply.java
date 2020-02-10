@@ -30,5 +30,5 @@ public class RoomApply {
     private Long managerId;
 
 //    是否通过0没决定，1通过，2不通过
-    private Integer permission;
+    private Long permission;
 }

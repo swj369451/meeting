@@ -10,7 +10,7 @@
 <body>
 
   <!--导航-->
-  <nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+  <nav th:replace="_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
   </nav>
   <!--中间内容-->
   <div  class="m-container-small m-padded-tb-big">
@@ -33,12 +33,18 @@
         <tbody>
           <tr th:each="message,iterStat : ${page.content}">
             <td th:text="${iterStat.count}">1</td>
-            <td>信息类型</td>
+            <td th:text="${message.type}=='0'?'会议申请'">信息类型</td>
             <td th:text="${#dates.format(message.createTime,'yyyy-MM-dd HH:mm')}">信息时间</td>
             <td th:text="${message.content}">信息内容</td>
             <td th:if="${message.result}=='0'">
-              <a href="#" th:href="@{/message/permit/1/{id}(id=${message.id})}" class="ui mini teal basic button">允许</a>
-              <a href="#" th:href="@{/message/permit/2/{id}(id=${message.id})}" class="ui mini red basic button">拒绝</a>
+              <a href="#" th:href="@{/message/permit/1/{id}/{applicantId}/{relate}(id=${message.id},applicantId=${message.requireId},relate=${message.relate})}" class="ui mini teal basic button">允许</a>
+              <a href="#" th:href="@{/message/permit/2/{id}/{applicantId}/{relate}(id=${message.id},applicantId=${message.requireId},relate=${message.relate})}" class="ui mini red basic button">拒绝</a>
+            </td>
+            <td th:if="${message.result}=='1'">
+              <a href="#" class="ui mini teal basic button">已允许</a>
+            </td>
+            <td th:if="${message.result}=='2'">
+              <a href="#" class="ui mini red basic button">已拒绝</a>
             </td>
           </tr>
         </tbody>

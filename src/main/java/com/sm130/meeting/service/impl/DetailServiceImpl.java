@@ -1,14 +1,17 @@
-package com.sm130.meeting.service;
+package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.DetailRepository;
 import com.sm130.meeting.po.Detail;
+import com.sm130.meeting.service.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DetailServiceImpl implements DetailService {
 
     @Autowired

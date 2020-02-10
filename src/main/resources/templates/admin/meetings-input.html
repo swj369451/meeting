@@ -133,7 +133,10 @@
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">会议地址</label>
-                    <input type="text" name="place" th:value="*{place}" placeholder="填写会议的地址">
+                    <input type="text" name="place" th:value="*{place}" placeholder="填写会议的地址" list="browsers">
+                    <datalist id="browsers" th:each="room : ${rooms}">
+                        <option value="会议室选项" th:value="|会议室：${room.name}，地址：${room.place}，到期时间：${#dates.format(room.time,'yyyy-MM-dd')}">
+                    </datalist>
                 </div>
             </div>
 

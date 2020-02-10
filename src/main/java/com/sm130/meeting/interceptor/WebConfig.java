@@ -13,6 +13,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/admin/**")
                 .addPathPatterns("/about")
                 .addPathPatterns("/room/apply")
+                .addPathPatterns("/message/list")
                 .excludePathPatterns("/admin")
                 .excludePathPatterns("/admin/login");
 

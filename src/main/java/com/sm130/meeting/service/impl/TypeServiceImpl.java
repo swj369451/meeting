@@ -1,8 +1,9 @@
-package com.sm130.meeting.service;
+package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.NotFoundException;
 import com.sm130.meeting.dao.TypeRepository;
 import com.sm130.meeting.po.Type;
+import com.sm130.meeting.service.TypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class TypeServiceImpl implements TypeService {
 
     @Autowired

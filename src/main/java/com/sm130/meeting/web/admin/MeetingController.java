@@ -3,6 +3,7 @@ package com.sm130.meeting.web.admin;
 import com.sm130.meeting.po.Meeting;
 import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.MeetingService;
+import com.sm130.meeting.service.RoomApplyService;
 import com.sm130.meeting.service.TagService;
 import com.sm130.meeting.service.TypeService;
 import com.sm130.meeting.vo.MeetingQuery;
@@ -30,13 +31,15 @@ public class MeetingController {
     private static final String LIST = "admin/meetings";
     private static final String REDIRECT_LIST = "redirect:/admin/meetings";
 
-
     @Autowired
     private MeetingService meetingService;
     @Autowired
     private TypeService typeService;
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private RoomApplyService roomApplyService;
 
     @GetMapping("/meetings")
     public String meetings(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
@@ -55,9 +58,14 @@ public class MeetingController {
 
 
     @GetMapping("/meetings/input")
-    public String input(Model model) {
+    public String input(Model model, HttpSession session) {
         setTypeAndTag(model);
+        User user = (User) session.getAttribute("user");
+
         model.addAttribute("meeting", new Meeting());
+
+        model.addAttribute("rooms",roomApplyService.validRoom(user.getId()));
+
         return INPUT;
     }
 
@@ -85,6 +93,12 @@ public class MeetingController {
         meeting.setUser((User) session.getAttribute("user"));
         meeting.setType(typeService.getType(meeting.getType().getId()));
         meeting.setTags(tagService.listTag(meeting.getTagIds()));
+
+//        判断是否是有申请的会议室
+
+        if(meeting.getPlace().substring(0,3).equals("会议室")){
+            meeting.setPlace(meeting.getPlace().split("，")[1].substring(3));
+        }
         Meeting b;
         if (meeting.getId() == null) {
             String[] split = meeting.getTimes().split("-");

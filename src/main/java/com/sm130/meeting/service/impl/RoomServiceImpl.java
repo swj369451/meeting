@@ -1,15 +1,18 @@
-package com.sm130.meeting.service;
+package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.RoomRepository;
 import com.sm130.meeting.po.Room;
+import com.sm130.meeting.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Service
+@Transactional
 public class RoomServiceImpl implements RoomService {
 
     @Autowired

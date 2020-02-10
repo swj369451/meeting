@@ -1,8 +1,9 @@
-package com.sm130.meeting.service;
+package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.NotFoundException;
 import com.sm130.meeting.dao.TagRepository;
 import com.sm130.meeting.po.Tag;
+import com.sm130.meeting.service.TagService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class TagServiceImpl implements TagService {
 
     @Autowired

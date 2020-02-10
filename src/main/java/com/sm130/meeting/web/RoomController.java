@@ -7,6 +7,7 @@ import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.MessageService;
 import com.sm130.meeting.service.RoomApplyService;
 import com.sm130.meeting.service.RoomService;
+import com.sm130.meeting.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,20 +61,20 @@ public class RoomController {
     @PostMapping("/applyadd")
     public String applyAdd(String content, String time, Long roomid,Long managerid,String roomname,
                            RedirectAttributes attributes,HttpSession session){
-        Date date = new Date(Integer.parseInt(time.substring(0, 4))-19, Integer.parseInt(time.substring(5, 7)), Integer.parseInt(time.substring(8, 10)));
+//        Date date = new Date(Integer.parseInt(time.substring(0, 4)), Integer.parseInt(time.substring(5, 7)), Integer.parseInt(time.substring(8, 10)));
         RoomApply roomApply = new RoomApply();
         roomApply.setContent(content);
-        roomApply.setTime(date);
+        roomApply.setTime(DateUtils.String2Date(time));
         User user = (User) session.getAttribute("user");
         roomApply.setApplyUserId(user.getId());
-        roomApply.setPermission(0);
+        roomApply.setPermission(0L);
         roomApply.setRoomId(roomid);
         roomApply.setManagerId(managerid);
         roomApplyService.save(roomApply);
 
 //        储存消息
         String msg = user.getNickname()+":申请<"+roomname+">到"+time+",申请原因："+content;
-        Message message = new Message(null,user.getId(),managerid,msg,0L,new Date());
+        Message message = new Message(null,user.getId(),managerid,msg,0L,0L,new Date(),roomApply.getId());
         messageService.save(message);
 
         attributes.addFlashAttribute("message", "申请成功");

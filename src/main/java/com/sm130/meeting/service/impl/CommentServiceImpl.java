@@ -1,8 +1,9 @@
-package com.sm130.meeting.service;
+package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.CommentRepository;
 import com.sm130.meeting.po.Comment;
 import com.sm130.meeting.po.Meeting;
+import com.sm130.meeting.service.CommentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -15,6 +16,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     @Autowired

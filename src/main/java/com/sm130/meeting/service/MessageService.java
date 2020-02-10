@@ -10,4 +10,5 @@ public interface MessageService {
     Page<Message> listMeeting(Pageable pageable, Long receive);
 
     void changeById(Long id,Long permit);
+
 }
