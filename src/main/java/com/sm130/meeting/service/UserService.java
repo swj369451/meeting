@@ -17,8 +17,6 @@ public interface UserService {
 
     Page<User> listUsers(Pageable pageable);
 
-    User updateUser(User user);
-
     User deleteById(Long id);
 
     List<User> findAll();

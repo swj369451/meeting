@@ -15,18 +15,13 @@
 </head>
 <body>
 
-<wui-date
-        format="yyyy-mm-dd hh:mm"
-        placeholder="请选择或输入日期"
-        id="date3"
-        btns="{'ok':'确定','now':'此刻'}"
-        ng-model="date3"
->
-</wui-date>
 
-<script type="text/javascript">
-    var app = angular.module('app',["wui.date"]);
-</script>
+<label class="block clearfix">
+	<span class="block input-icon input-icon-right">
+		<input type="text" style="width:60%;float:left;" class="form-control" placeholder="验证码" name="checkcode"/>
+		<span style="cursor:pointer;float: right;height: 34px; width: 38%;"> <img id="image" style="width: 100%;height:100%;" src="<%=request.getContextPath() %>/image/generator" onclick="reCheckcode(this);" /></span>
+	</span>
+</label>
 
 </body>
 </html>

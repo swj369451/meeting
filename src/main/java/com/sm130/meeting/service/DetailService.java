@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface DetailService {
 
-    Detail save(Detail detail);
+    Detail save(String content);
     Page<Detail> list(Pageable pageable);
     Page<Detail> listByUserId(Pageable pageable,Long userId);
 }

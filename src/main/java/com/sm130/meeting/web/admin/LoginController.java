@@ -30,8 +30,13 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
+                        @RequestParam String verifyCode,
                         HttpSession session,
                         RedirectAttributes attributes) {
+        if(verifyCode.equals("2")){
+            attributes.addFlashAttribute("message", "验证码错误");
+            return "redirect:/admin";
+        }
         User user = userService.checkUser(username, password);
         if (user != null) {
 //            user.setPassword(null);

@@ -2,6 +2,7 @@ package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.UserRepository;
 import com.sm130.meeting.po.User;
+import com.sm130.meeting.service.DetailService;
 import com.sm130.meeting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private DetailService detailService;
+
     @Override
     public User checkUser(String username, String password) {
 //        User user = userRepository.findByUsernameAndPassword(username, MD5Utils.code(password));
@@ -35,6 +39,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         User save = userRepository.save(user);
+        if(user.getId()==null){
+            detailService.save("添加了<"+user.getNickname()+">");
+        }else {
+            detailService.save("更新了<"+user.getNickname()+">");
+        }
         return save;
     }
 
@@ -43,14 +52,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(pageable);
     }
 
-    @Override
-    public User updateUser(User user) {
-        User save = userRepository.save(user);
-        return save;
-    }
+
 
     @Override
     public User deleteById(Long id) {
+        User user = userRepository.findById(id).get();
+        detailService.save("刪除了<"+user.getNickname()+">");
         userRepository.deleteById(id);
         return null;
     }

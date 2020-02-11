@@ -50,18 +50,20 @@
           <thead>
           <tr>
             <th>序列</th>
-            <th>用户id</th>
+            <!--<th>用户id</th>-->
             <th>昵称</th>
+            <th>用户类型</th>
             <th>时间</th>
-            <th>操作</th>
+            <th>操作详情</th>
           </tr>
           </thead>
           <tbody>
           <tr th:each="detail,iterStat:${page.content}">
             <td th:text="${iterStat.count}">1</td>
-            <td th:text="${detail.userid}">刻意练习清单</td>
+            <!--<td th:text="${detail.userid}">刻意练习清单</td>-->
             <td th:text="${detail.nickname}">认知升级</td>
-            <td th:text="${detail.time}">是</td>
+            <td th:text="${detail.type}=='1'?'普通用户':'管理员'">认知升级</td>
+            <td th:text="${#dates.format(detail.time,'yyyy-MM-dd HH:mm')}">是</td>
             <td th:text="${detail.content}">2017-10-02 09:45</td>
           </tr>
           </tbody>
