@@ -18,7 +18,7 @@ public class LogAspect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 //    定义切面
-    @Pointcut("execution(* com.lrm.web.*.*(..))")
+    @Pointcut("execution(* com.sm130.meeting.web.*.*(..))")
     public void log() {}
 
 
