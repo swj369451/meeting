@@ -41,6 +41,13 @@ public class MeetingController {
     @Autowired
     private RoomApplyService roomApplyService;
 
+    /**
+     * 获取所有会议
+     * @param pageable
+     * @param meeting
+     * @param model
+     * @return
+     */
     @GetMapping("/meetings")
     public String meetings(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                            MeetingQuery meeting, Model model) {
@@ -49,6 +56,13 @@ public class MeetingController {
         return LIST;
     }
 
+    /**
+     * 会议搜索
+     * @param pageable
+     * @param meeting
+     * @param model
+     * @return
+     */
     @PostMapping("/meetings/search")
     public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          MeetingQuery meeting, Model model) {
@@ -57,6 +71,12 @@ public class MeetingController {
     }
 
 
+    /**
+     * 会议添加跳转页面
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/meetings/input")
     public String input(Model model, HttpSession session) {
         setTypeAndTag(model);
@@ -75,6 +95,12 @@ public class MeetingController {
     }
 
 
+    /**
+     * 编辑会议
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/meetings/{id}/input")
     public String editInput(@PathVariable Long id, Model model) {
         setTypeAndTag(model);

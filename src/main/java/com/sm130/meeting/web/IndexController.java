@@ -65,6 +65,12 @@ public class IndexController {
         return "search";
     }
 
+    /**
+     * 查看会议详情
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/meeting/{id}")
     public String meeting(@PathVariable Long id,Model model) {
         model.addAttribute("meeting", meetingService.getAndConvert(id));

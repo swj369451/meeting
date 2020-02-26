@@ -24,4 +24,4 @@ logging:
 #    设置日志存储路径
   file: log/meeting.log
 server:
-  port: 8085
+  port: 8080
