@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="b/header :: head(~{::title})">
+    <title>后台管理页面</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <head th:include="b/nav"/>
+    <!--菜单栏-->
+    <aside th:include="b/menu"/>
+    <!--导航栏-->
+    <div class="content-wrapper" th:fragment="nav">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                用户管理
+                <small>用户列表</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">用户列表</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <section class="content">
+                <!-- Horizontal Form -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" th:text="|${user.id==null?'新增':'编辑'}用户|"></h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div th:if="${result != null}"
+                         class="alert alert-${result.status==200?'success':'warning'} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-warning"></i><span th:text="${result.message}"></span></h4>
+                    </div>
+                    <!-- form start -->
+                    <form id="inputForm" class="form-horizontal" action="back/user/save" method="post">
+                        <input type="hidden" name="id"/>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="username" class="col-sm-2 control-label">用户名</label>
+
+                                <div class="col-sm-10">
+                                    <input class="form-control required" id="username" name="username"
+                                           placeholder="请输入用户名"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-2 control-label">密码</label>
+
+                                <div class="col-sm-10">
+                                    <input class="form-control required" id="password" name="password"
+                                           placeholder="请输入密码"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">邮箱</label>
+
+                                <div class="col-sm-10">
+                                    <input class="form-control required email" id="email" name="email"
+                                           placeholder="请输入邮箱"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="avatar" class="col-sm-2 control-label">头像地址</label>
+
+                                <div class="col-sm-10">
+                                    <input class="form-control required" id="avatar" name="avatar"
+                                           placeholder="请输入头像地址"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-sm-2 control-label">权限</label>
+
+                                <div class="col-sm-10">
+                                    <input class="form-control required" id="type" name="type" list="browsers"
+                                           placeholder="请输入权限"/>
+                                    <datalist id="browsers">
+                                        <option value="管理员">
+                                        <option value="普通用户">
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-default" onclick="history.go(-1)">返回</button>
+                            <button type="submit" class="btn btn-info pull-right">提交</button>
+                        </div>
+                        <!-- /.box-footer -->
+                    </form>
+                </div>
+            </section>
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!--版权-->
+    <footer th:include="b/copyright"/>
+</div>
+<!--js-->
+<div th:include="b/footer"/>
+</body>
+</html>
