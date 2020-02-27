@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="b/header :: head(~{::title})">
+<head th:replace="b/include/header :: head(~{::title})">
     <title>后台管理页面</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <head th:include="b/nav"/>
+    <head th:include="b/include/nav"/>
     <!--菜单栏-->
-    <aside th:include="b/menu"/>
+    <aside th:include="b/include/menu"/>
     <!--导航栏-->
-    <div class="content-wrapper" th:fragment="nav">
+    <div class="content-wrapper" th:fragment="include/nav">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -31,9 +31,9 @@
 
 
     <!--版权-->
-    <footer  th:include="b/copyright"/>
+    <footer  th:include="b/include/copyright"/>
 </div>
 <!--js-->
-<div th:include="b/footer"/>
+<div th:include="b/include/footer"/>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="b/header :: head(~{::title})">
+<head th:replace="b/include/header :: head(~{::title})">
     <title>后台登录页面</title>
 </head>
 
@@ -53,6 +53,6 @@
 <!-- /.login-box -->
 
 <!--js-->
-<div th:include="b/footer"/>
+<div th:include="b/include/footer"/>
 </body>
 </html>

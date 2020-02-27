@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="b/header :: head(~{::title})">
+<head th:replace="b/include/header :: head(~{::title})">
     <title>后台管理页面</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <head th:include="b/nav"/>
+    <head th:include="b/include/nav"/>
     <!--菜单栏-->
-    <aside th:include="b/menu"/>
+    <aside th:include="b/include/menu"/>
     <!--导航栏-->
-    <div class="content-wrapper" th:fragment="nav">
+    <div class="content-wrapper" th:fragment="include/nav">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -29,14 +29,15 @@
                     <div class="box-header with-border">
                         <h3 class="box-title" th:text="|${user.id==null?'新增':'编辑'}用户|"></h3>
                     </div>
-                    <!-- /.box-header -->
+
                     <div th:if="${result != null}"
+                         th:classappend="|alert alert-${result.status==200?'success':'warning'} alert-dismissible|"
                          class="alert alert-${result.status==200?'success':'warning'} alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h4><i class="icon fa fa-warning"></i><span th:text="${result.message}"></span></h4>
                     </div>
                     <!-- form start -->
-                    <form id="inputForm" class="form-horizontal" action="back/user/save" method="post">
+                    <form id="inputForm" class="form-horizontal" action="/back/user/save" method="post">
                         <input type="hidden" name="id"/>
                         <div class="box-body">
                             <div class="form-group">
@@ -56,6 +57,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="nickname" class="col-sm-2 control-label">用户昵称</label>
+
+                                <div class="col-sm-10">
+                                    <input class="form-control required" id="nickname" name="nickname"
+                                           placeholder="请输入用户昵称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="email" class="col-sm-2 control-label">邮箱</label>
 
                                 <div class="col-sm-10">
@@ -67,22 +76,21 @@
                                 <label for="avatar" class="col-sm-2 control-label">头像地址</label>
 
                                 <div class="col-sm-10">
-                                    <input class="form-control required" id="avatar" name="avatar"
+                                    <input class="form-control" id="avatar" name="avatar"
                                            placeholder="请输入头像地址"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="type" class="col-sm-2 control-label">权限</label>
-
+                                <label for="type" class="col-sm-2 control-label">用户类型</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control required" id="type" name="type" list="browsers"
-                                           placeholder="请输入权限"/>
-                                    <datalist id="browsers">
-                                        <option value="管理员">
-                                        <option value="普通用户">
-                                    </datalist>
+                                    <select class="form-control select2" id="type" name="type" style="width: 100%;">
+                                        <option selected="selected" value="1">普通用户</option>
+                                        <option  value="2">管理员</option>
+                                    </select>
                                 </div>
+
                             </div>
+
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
@@ -99,9 +107,15 @@
 
 
     <!--版权-->
-    <footer th:include="b/copyright"/>
+    <footer th:include="b/include/copyright"/>
 </div>
 <!--js-->
-<div th:include="b/footer"/>
+<div th:include="b/include/footer"/>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+    })
+</script>
 </body>
 </html>

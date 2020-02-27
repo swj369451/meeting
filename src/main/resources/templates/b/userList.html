@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="b/header :: head(~{::title})">
+<head th:replace="b/include/header :: head(~{::title})">
     <title>后台管理页面</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <head th:include="b/nav"/>
+    <head th:include="b/include/nav"/>
     <!--菜单栏-->
-    <aside th:include="b/menu"/>
+    <aside th:include="b/include/menu"/>
     <!--导航栏-->
-    <div class="content-wrapper" th:fragment="nav">
+    <div class="content-wrapper" th:fragment="include/nav">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -76,20 +76,25 @@
                         <div class="box-body">
                             <a href="/back/user/form" type="button" class="btn btn-sm btn-default"><i
                                     class="fa fa-search"></i>新增</a>&nbsp;&nbsp;&nbsp;
-                            <button type="button" onclick="app.deleteMulti('/user/delete')"
-                                    class="btn btn-sm btn-default"><i class="fa fa-trash"></i>批量删除
-                            </button>&nbsp;&nbsp;&nbsp;
+                            <!--<button type="button" onclick="app.deleteMulti('/user/delete')"-->
+                                    <!--class="btn btn-sm btn-default"><i class="fa fa-trash"></i>批量删除-->
+                            <!--</button>&nbsp;&nbsp;&nbsp;-->
                             <a href="#" type="button" class="btn btn-sm btn-default"><i
                                     class="fa fa-download"></i>导入</a>&nbsp;&nbsp;&nbsp;
                             <a href="#" type="button" class="btn btn-sm btn-default"><i class="fa fa-upload"></i>导出</a>&nbsp;&nbsp;&nbsp;
-                            <a href="#" type="button" class="btn btn-sm btn-primary"
-                               onclick="$('.box-search').css('display')=='none'?$('.box-search').show('fast'):$('.box-search').hide('fast')">
-                                <i class="fa fa-upload"></i>查询</a>
+                            <!--<a href="#" type="button" class="btn btn-sm btn-primary"-->
+                               <!--onclick="$('.box-search').css('display')=='none'?$('.box-search').show('fast'):$('.box-search').hide('fast')">-->
+                                <!--<i class="fa fa-upload"></i>查询</a>-->
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
+
                             <div th:if="${result != null}"
-                                 class="alert alert-${result.status==200?'success':'warning'} alert-dismissible">
+                                 class="alert alert-success alert-dismissible"
+                                 th:classappend="|alert alert-${result.status==200?'success':'warning'} alert-dismissible|"
+                                    >
+
+                                <!--class="alert alert-${result.status==200?'success':'warning'} alert-dismissible">-->
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                                 </button>
                                 <h4><i class="icon fa fa-warning"></i>
@@ -125,7 +130,7 @@
                                         </button>&nbsp;&nbsp;&nbsp;
                                         <a href="/user/form?userId=' + row.id + '" type="button"
                                            class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i>删除
+                                        <button type="button" th:onclick="|del(${user.id})|" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i>删除
                                         </button>
                                     </td>
 
@@ -141,13 +146,33 @@
         </section>
         <!-- /.content -->
     </div>
-
+    <!--modal-->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-message">信息&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                    <button type="button" id="modal-save" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!--版权-->
-    <footer th:include="b/copyright"/>
+    <footer th:include="b/include/copyright"/>
 </div>
 <!--js-->
-<div th:include="b/footer"/>
+<div th:include="b/include/footer"/>
 <script>
     $('#dataTable').DataTable({
         language: {
@@ -175,6 +200,33 @@
             }
         }
     });
+    function del(id) {
+        $('#modal-title').html("删除用户:"+id);
+        $('#modal-body').html("你确定要删除用户ID:"+id);
+        $('#modal-detail').modal('show');
+        $('#modal-save').bind('click',function () {
+            setTimeout(function () {
+                $.ajax({
+                    "url":"/back/user/delete",
+                    "type":"POST",
+                    "async":false,
+                    "data":{"userId":id},
+                    "dataType":"JSON",
+                    "success":function (data) {
+                    //请求成功
+                        $('#modal-save').unbind('click');
+                        $("#modal-message").html(data.message);
+                        $('#modal-save').bind('click',function () {
+                            $("#modal-default").modal('hide');
+                            window.location.reload();
+                        });
+                    }
+                })
+            },500);
+            //显示模态框
+            $("#modal-default").modal('show');
+        })
+    }
 </script>
 </body>
 </html>

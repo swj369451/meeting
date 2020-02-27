@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,12 +39,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        User save = userRepository.save(user);
+        if(user.getAvatar()==null){
+            user.setAvatar("https://unsplash.it/800/600?image=1005");
+        }
         if(user.getId()==null){
+            user.setCreateTime(new Date());
+            user.setUpdateTime(new Date());
             detailService.save("添加了<"+user.getNickname()+">");
         }else {
+            user.setUpdateTime(new Date());
             detailService.save("更新了<"+user.getNickname()+">");
         }
+        User save = userRepository.save(user);
         return save;
     }
 

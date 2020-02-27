@@ -6,9 +6,7 @@ import com.sm130.meeting.web.utils.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -39,7 +37,7 @@ public class BackUserController {
     public String list(Model model){
         List<User> users = userService.findAll();
         model.addAttribute("users",users);
-        return "b/user";
+        return "b/userList";
     }
 
     /**
@@ -68,8 +66,7 @@ public class BackUserController {
 //            保存成功
             baseResult = BaseResult.success("新增用户成功");
             redirectAttributes.addFlashAttribute("result",baseResult);
-            // // TODO: 2020/2/27 跳转地址无效
-            return "redirect:back/user/list";
+            return "redirect:/back/user/list";
         }else{
 //            保存失败
             baseResult = BaseResult.success("新增用户失败");
@@ -77,5 +74,25 @@ public class BackUserController {
             model.addAttribute("user",user);
             return "b/user_form";
         }
+    }
+
+    /**
+     * 删除用户
+     * @param userId
+     * @return
+     */
+
+    @ResponseBody
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public BaseResult delete(String userId){
+        // todo ajax无法发送请求
+        User user = userService.deleteById(Long.parseLong(userId));
+        BaseResult baseResult;
+        if(user!=null){
+            baseResult=BaseResult.success("添加成功");
+        }else{
+            baseResult=BaseResult.fail("添加失败");
+        }
+        return baseResult;
     }
 }
