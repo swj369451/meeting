@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+  <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+  <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+  <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--&lt;!&ndash;中间内容&ndash;&gt;-->
+<div id="waypoint" class="m-container-small m-padded-tb-big animated fadeIn">
+  <div class="ui container">
+
+    <div class="ui attached segment">
+      <!--图片区域-->
+      <img src="https://unsplash.it/800/450?image=1005" th:src="@{${meeting.firstPicture}}"  alt="" class="ui fluid rounded image">
+    </div>
+    <div class="ui  attached padded segment">
+      <h2 class="ui center aligned header" th:text="${meeting.title}">这次会议的主题是开发一个毕业设计</h2>
+      <br>
+      <div id="content" class="typo typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large" th:utext="${meeting.content}">
+        <!--内容-->
+      </div>
+      <!--标签-->
+      <div class="m-padded-lr-responsive">
+        <div class="ui basic teal left pointing label"  th:each="tag : ${meeting.tags}" th:text="${tag.name}">方法论</div>
+      </div>
+
+    <!--</div>-->
+    <div class="ui attached positive message" th:if="${meeting.shareStatement}">
+      <!--会议信息-->
+      <div class="ui middle aligned grid">
+        <div class="eleven wide column">
+          <ui class="list">
+            <li>会议发起者：<span th:text="${meeting.user.nickname}">李仁密</span></li>
+            <li>发布时间：<span th:text="${#dates.format(meeting.updateTime,'yyyy-MM-dd HH:mm')}">2017-10-02 09:08</span></li>
+          </ui>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+</body>
+</html>

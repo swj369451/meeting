@@ -1,6 +1,5 @@
 package com.sm130.meeting.web;
 
-import com.sm130.meeting.po.Detail;
 import com.sm130.meeting.po.Meeting;
 import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.DetailService;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("back/meeting")
@@ -104,14 +101,14 @@ public class BackMeetingController {
 
     /**
      * 删除用户
-     * @param id
+     * @param meetingId
      * @return
      */
 
     @ResponseBody
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public BaseResult delete(String id){
-        meetingService.deleteMeeting(Long.parseLong(id));
+    public BaseResult delete(String meetingId){
+        meetingService.deleteMeeting(Long.parseLong(meetingId));
         BaseResult baseResult;
         baseResult=BaseResult.success("删除成功");
         return baseResult;
@@ -119,13 +116,8 @@ public class BackMeetingController {
 
     @RequestMapping(value="/detail",method = RequestMethod.GET)
     public String detail(String id,Model model){
-        List<Detail> details = detailService.listByUserId(Long.parseLong(id));
-
-        List<Detail> collect = details.stream()
-                .sorted(Comparator.comparing(Detail::getTime).reversed())
-                .limit(10)
-                .collect(Collectors.toList());
-        model.addAttribute("details",collect);
-        return "b/detail";
+        Meeting meeting = meetingService.getMeeting(Long.parseLong(id));
+        model.addAttribute("meeting",meeting);
+        return "meetingDetail";
     }
 }
