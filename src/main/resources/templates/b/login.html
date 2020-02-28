@@ -9,11 +9,11 @@
 <!-- /.login-logo -->
 <div class="login-box">
     <div class="login-logo">
-        <a href="#">我的商城</a>
+        <a href="#">会议后台</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">登录后台管理系统</p>
+        <p class="login-box-msg">登录会议后台管理系统</p>
         <form action="/back/login" method="post">
             <div th:if="${message != null}" class="alert alert-danger alert-dismissible"
                  th:unless="${#strings.isEmpty(message)}">
@@ -45,8 +45,6 @@
                 <!-- /.col -->
             </div>
         </form>
-
-        <a href="#">忘记密码?</a><br>
     </div>
     <!-- /.login-box-body -->
 </div>

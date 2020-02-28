@@ -17,7 +17,7 @@
                 <td th:text="|${iterStat.count}.|"></td>
                 <td th:text="${details.nickname}"></td>
                 <td th:text="${details.content}"></td>
-                <td th:text="${details.time}"></td>
+                <td th:text="${#dates.format(details.time,'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
         </table>
     </div>

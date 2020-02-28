@@ -41,12 +41,9 @@ public class CommentController {
         Meeting meeting = meetingService.getMeeting(meetingId);
         comment.setMeeting(meeting);
         User user = (User) session.getAttribute("user");
-
+        comment.setAvatar(user.getAvatar());
         if (user.getId()==meeting.getUser().getId()) {
-            comment.setAvatar(user.getAvatar());
             comment.setAdminComment(true);
-        } else {
-            comment.setAvatar(avatar);
         }
         commentService.saveComment(comment);
         return "redirect:/comments/" + meetingId;

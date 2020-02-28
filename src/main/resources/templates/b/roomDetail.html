@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div class="box">
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tr>
+                <th style="width: 10px">#</th>
+                <th>申请理由</th>
+                <th>申请时间</th>
+                <th>会议室</th>
+                <th>申请人昵称</th>
+                <th>管理员昵称</th>
+                <th>申请结果</th>
+            </tr>
+            <tr th:each="roomApply,iterStat:${roomApplies}">
+                <td th:text="|${iterStat.count}.|"></td>
+                <td th:text="${roomApply.content}"></td>
+                <td th:text="${roomApply.time}"></td>
+                <td th:text="${roomApply.roomName}"></td>
+                <td th:text="${roomApply.applyNickName}"></td>
+                <td th:text="${roomApply.managerName}"></td>
+                <td>
+                    <span th:if="${roomApply.permission == 0}" class="label label-info">申请中</span>
+                    <span th:if="${roomApply.permission == 1}" class="label label-success">通过</span>
+                    <span th:if="${roomApply.permission == 2}" class="label label-danger">拒绝</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

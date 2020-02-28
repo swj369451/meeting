@@ -14,6 +14,7 @@ public class Comment {
 
     @Id
     @GeneratedValue
+//    id
     private Long id;
 //    昵称
     private String nickname;

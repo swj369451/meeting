@@ -2,8 +2,10 @@ package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.RoomApplyRepository;
 import com.sm130.meeting.dao.RoomRepository;
+import com.sm130.meeting.dao.UserRepository;
 import com.sm130.meeting.po.Room;
 import com.sm130.meeting.po.RoomApply;
+import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.RoomApplyService;
 import com.sm130.meeting.vo.ApplyRoomPlace;
 import org.springframework.beans.BeanUtils;
@@ -27,8 +29,19 @@ public class RoomApplyServiceImpl implements RoomApplyService {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public void save(RoomApply roomApply) {
+//        设置用户，会议室，管理员信息
+        User user = userRepository.findById(roomApply.getApplyUserId()).get();
+        roomApply.setApplyNickName(user.getNickname());
+        Room room = roomRepository.findById(roomApply.getRoomId()).get();
+        roomApply.setRoomName(room.getName());
+        User managerUser = userRepository.findById(roomApply.getManagerId()).get();
+        roomApply.setManagerName(managerUser.getNickname());
+
         roomApplyRepository.save(roomApply);
     }
 
@@ -64,5 +77,14 @@ public class RoomApplyServiceImpl implements RoomApplyService {
             return applyRoomPlace;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public List<RoomApply> findAllByRoomId(Long roomId) {
+        RoomApply roomApply = new RoomApply();
+        roomApply.setRoomId(roomId);
+        Example<RoomApply> example = Example.of(roomApply);
+        List<RoomApply> roomApplies = roomApplyRepository.findAll(example);
+        return roomApplies;
     }
 }

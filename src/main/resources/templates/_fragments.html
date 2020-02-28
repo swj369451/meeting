@@ -23,8 +23,8 @@
             <!--判断并添加class属性 th:classappend="${n==1} ? 'active' -->
             <a href="#" th:href="@{/}" class="m-item item m-mobile-hide " th:classappend="${n==1} ? 'active'"><i
                     class="mini home icon"></i>首页</a>
-            <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i
-                    class="mini idea icon"></i>分类</a>
+            <!--<a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i-->
+                    <!--class="mini idea icon"></i>分类</a>-->
             <a href="#" th:href="@{/message/list}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i
                     class="mini tags icon"></i>消息</a>
             <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i
@@ -34,7 +34,9 @@
             <a href="#" th:href="@{/room/list}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i
             class="mini info icon"></i>会议室</a>
             <a href="#" th:href="@{/admin/meetings}" class="m-item item m-mobile-hide" th:classappend="${n==6} ? 'active'"><i
-                    class="mini archive icon"></i>会议管理</a>
+                class="mini archive icon"></i>会议管理</a>
+            <a href="#" th:href="@{/back/login}" class="m-item item m-mobile-hide" th:classappend="${n==6} ? 'active'"><i
+                    class="mini archive icon"></i>后台管理</a>
             <div class="right m-item item m-mobile-hide">
                 <!--搜索的表单-->
                 <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">

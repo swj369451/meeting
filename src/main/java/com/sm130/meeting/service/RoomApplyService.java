@@ -13,4 +13,6 @@ public interface RoomApplyService {
     RoomApply findById(Long roomApplyId);
 
     List<ApplyRoomPlace> validRoom(Long userId);
+
+    List<RoomApply> findAllByRoomId(Long roomId);
 }

@@ -64,7 +64,6 @@ public class BackMeetingController {
             Meeting meeting = meetingService.getMeeting(Long.parseLong(id));
             model.addAttribute("meeting",meeting);
         }
-//        todo 编辑显示有问题
         return "b/meeting_form";
     }
 

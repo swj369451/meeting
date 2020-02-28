@@ -1,7 +1,8 @@
-package com.sm130.meeting.service;
+package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.MessageRepository;
 import com.sm130.meeting.po.Message;
+import com.sm130.meeting.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

@@ -1,8 +1,10 @@
 package com.sm130.meeting.web;
 
 import com.sm130.meeting.po.Room;
+import com.sm130.meeting.po.RoomApply;
 import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.DetailService;
+import com.sm130.meeting.service.RoomApplyService;
 import com.sm130.meeting.service.RoomService;
 import com.sm130.meeting.service.UserService;
 import com.sm130.meeting.web.utils.BaseResult;
@@ -27,6 +29,9 @@ public class BackRoomController {
 
     @Autowired
     private DetailService detailService;
+
+    @Autowired
+    private RoomApplyService roomApplyService;
 
     @Autowired
     private UserService userService;
@@ -132,15 +137,10 @@ public class BackRoomController {
         return baseResult;
     }
 
-//    @RequestMapping(value="/detail",method = RequestMethod.GET)
-//    public String detail(String id,Model model){
-//        List<Detail> details = detailService.listByRoomId(Long.parseLong(id));
-//
-//        List<Detail> collect = details.stream()
-//                .sorted(Comparator.comparing(Detail::getTime).reversed())
-//                .limit(10)
-//                .collect(Collectors.toList());
-//        model.addAttribute("details",collect);
-//        return "b/detail";
-//    }
+    @RequestMapping(value="/detail",method = RequestMethod.GET)
+    public String detail(String id,Model model){
+        List<RoomApply> roomApplies = roomApplyService.findAllByRoomId(Long.parseLong(id));
+        model.addAttribute("roomApplies",roomApplies);
+        return "b/roomDetail";
+    }
 }

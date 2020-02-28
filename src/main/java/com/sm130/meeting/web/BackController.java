@@ -16,6 +16,9 @@ public class BackController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BackUserController backUserController;
+
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(){
         return "b/index";
@@ -37,7 +40,9 @@ public class BackController {
 
         }
         session.setAttribute("user",user);
-        return index();
+//        return index();
+        return backUserController.list(model);
+
     }
 
 

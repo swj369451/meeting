@@ -1,6 +1,7 @@
 package com.sm130.meeting.service.impl;
 
 import com.sm130.meeting.dao.CommentRepository;
+import com.sm130.meeting.dao.UserRepository;
 import com.sm130.meeting.po.Comment;
 import com.sm130.meeting.po.Meeting;
 import com.sm130.meeting.service.CommentService;
@@ -21,6 +22,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<Comment> listCommentByMeetingId(Long blogId) {
