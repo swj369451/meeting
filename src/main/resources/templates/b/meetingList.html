@@ -4,7 +4,6 @@
     <title>后台管理页面</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-
 <div class="wrapper">
     <head th:include="b/include/nav"/>
     <!--菜单栏-->
@@ -75,8 +74,8 @@
                             <h3 class="box-title">用户列表</h3>
                         </div>
                         <div class="box-body">
-                            <a href="/back/user/form" type="button" class="btn btn-sm btn-default"><i
-                                    class="fa fa-search"></i>新增</a>&nbsp;&nbsp;&nbsp;
+                            <!--<a href="/back/user/form" type="button" class="btn btn-sm btn-default"><i-->
+                                    <!--class="fa fa-search"></i>新增</a>&nbsp;&nbsp;&nbsp;-->
                             <!--<button type="button" onclick="app.deleteMulti('/user/delete')"-->
                                     <!--class="btn btn-sm btn-default"><i class="fa fa-trash"></i>批量删除-->
                             <!--</button>&nbsp;&nbsp;&nbsp;-->
@@ -105,37 +104,38 @@
                                 <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>昵称</th>
-                                    <th>账号</th>
-                                    <th>头像地址</th>
-                                    <th>邮箱</th>
-                                    <th>类型</th>
+                                    <th>议题</th>
+                                    <th>地址</th>
+                                    <th>会议时间</th>
+                                    <th>访问数量</th>
+                                    <th>评论数量</th>
                                     <th>更新时间</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="user:${users}">
-                                    <td th:text="${user.id}">1</td>
-                                    <td th:text="${user.nickname}">1</td>
-                                    <td th:text="${user.username}">1</td>
-                                    <td th:text="${user.avatar}">1</td>
-                                    <td th:text="${user.email}">1</td>
-                                    <td th:text="${user.type}?'管理员':'普通用户'">1</td>
-                                    <td th:text="${user.updateTime}">1</td>
-                                    <td th:text="${user.createTime}">1</td>
+                                <tr th:each="meeting:${meetings}">
+                                    <td th:text="${meeting.id}">1</td>
+                                    <td th:text="${meeting.title}">1</td>
+                                    <td th:text="${meeting.place}">1</td>
+                                    <td th:text="${meeting.time}">1</td>
+                                    <td th:text="${meeting.views}">1</td>
+                                    <td th:text="${meeting.comments.size()}">1</td>
+                                    <td th:text="${meeting.updateTime}">1</td>
+                                    <td th:text="${meeting.createTime}">1</td>
+                                    <!---->
                                     <td>
                                         <!--<a href="#" th:href="@{/users/{id}/input(id=${user.id})}"-->
                                         <!--class="ui mini teal basic button">编辑</a>-->
                                         <!--<a href="#" th:href="@{/users/{id}/delete(id=${user.id})}"-->
                                         <!--class="ui mini red basic button">删除</a>-->
-                                        <button type="button" class="btn btn-sm btn-default" th:onclick="|select(${user.id})|"><i
+                                        <button type="button" class="btn btn-sm btn-default" th:onclick="|select(${meeting.id})|"><i
                                                 class="fa fa-search"></i>查看
                                         </button>&nbsp;&nbsp;&nbsp;
-                                        <a th:href="|/back/user/form?id=${user.id}|" type="button"
+                                        <a th:href="|/back/meeting/form?id=${meeting.id}|" type="button"
                                            class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" th:onclick="|del(${user.id})|" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i>删除
+                                        <button type="button" th:onclick="|del(${meeting.id})|" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i>删除
                                         </button>
                                     </td>
 
@@ -185,21 +185,26 @@
         }
     });
     function del(id) {
-        $('#modal-title').html("删除用户:"+id);
-        $('#modal-body').html("你确定要删除用户ID:"+id);
+        $('#modal-title').html("删除会议:"+id);
+        $('#modal-body').html("你确定要删除会议ID:"+id);
         $('#modal-detail').modal('show');
         $('#modal-save').bind('click',function (){
             setTimeout(function () {
                 $.ajax({
-                    "url":"/back/user/delete",
+                    "url":"/back/meeting/delete",
                     "type":"POST",
                     "async":false,
-                    "data":{"userId":id},
+                    "data":{"meetingId":id},
                     "dataType":"JSON",
                     "success":function (data) {
                     //请求成功
                         window.location.reload();
-
+                        // $('#modal-save').unbind('click');
+                        // $("#modal-message").html(data.message);
+                        // $('#modal-save').bind('click',function () {
+                        //     $("#modal-default").modal('hide');
+                        //     window.location.reload();
+                        // });
                     }
                 })
             },500);
@@ -208,7 +213,7 @@
     }
     function select(id) {
         $.ajax({
-            url: "/back/user/detail?id="+id,
+            url: "/back/meeting/detail?id="+id,
             type: 'get',
             dataType: 'html',
             success: function (data) {

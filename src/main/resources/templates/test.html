@@ -1,27 +1,222 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="admin/_fragments :: head(~{::title})">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>会议发布</title>
-
-<link rel="stylesheet" type="text/css" href="css/wui.min.css" th:href="@{/css/wui.min.css}">
-<link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{/css/style.css}">
-
-<script type="text/javascript" src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
-<script type="text/javascript" src="js/angular.min.js" th:src="@{/js/angular.min.js}"></script>
-<script type="text/javascript" src="js/wui-date.js" charset="utf-8" th:src="@{/js/wui-date.js}"></script>
-
+<head th:replace="b/include/header :: head(~{::title})">
+	<title>后台管理页面</title>
 </head>
-<body>
+<body class="hold-transition skin-blue sidebar-mini">
 
+<div class="wrapper">
+	<head th:include="b/include/nav"/>
+	<!--菜单栏-->
+	<aside th:include="b/include/menu"/>
+	<!--导航栏-->
+	<div class="content-wrapper" th:fragment="include/nav">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				用户管理
+				<small>用户列表</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+				<li class="active">用户列表</li>
+			</ol>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+			<!-- search -->
+			<div class="box box-info box-search" style="display: none;">
+				<div class="box-header with-border">
+					<h3 class="box-title">高级搜索</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="row form-horizontal" style="margin-top: 20px">
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label for="username" class="col-sm-2 control-label">用户</label>
 
-<label class="block clearfix">
-	<span class="block input-icon input-icon-right">
-		<input type="text" style="width:60%;float:left;" class="form-control" placeholder="验证码" name="checkcode"/>
-		<span style="cursor:pointer;float: right;height: 34px; width: 38%;"> <img id="image" style="width: 100%;height:100%;" src="<%=request.getContextPath() %>/image/generator" onclick="reCheckcode(this);" /></span>
-	</span>
-</label>
+								<div class="col-sm-10">
+									<input id="username" class="form-control" type="text" name="username"
+										   placeholder="请输入用户名">
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label for="phone" class="col-sm-2 control-label">手机</label>
 
+								<div class="col-sm-10">
+									<input id="phone" class="form-control" type="text" name="phone" placeholder="请输入手机">
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label for="email" class="col-sm-2 control-label">邮箱</label>
+
+								<div class="col-sm-10">
+									<input id="email" class="form-control" type="text" name="email" placeholder="请输入邮箱">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-10">
+								<button onclick="search()" class="btn btn-info pull-right">查询</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">用户列表</h3>
+						</div>
+						<div class="box-body">
+							<a href="/back/user/form" type="button" class="btn btn-sm btn-default"><i
+									class="fa fa-search"></i>新增</a>&nbsp;&nbsp;&nbsp;
+							<!--<button type="button" onclick="app.deleteMulti('/user/delete')"-->
+							<!--class="btn btn-sm btn-default"><i class="fa fa-trash"></i>批量删除-->
+							<!--</button>&nbsp;&nbsp;&nbsp;-->
+							<a href="#" type="button" class="btn btn-sm btn-default"><i
+									class="fa fa-download"></i>导入</a>&nbsp;&nbsp;&nbsp;
+							<a href="#" type="button" class="btn btn-sm btn-default"><i class="fa fa-upload"></i>导出</a>&nbsp;&nbsp;&nbsp;
+							<!--<a href="#" type="button" class="btn btn-sm btn-primary"-->
+							<!--onclick="$('.box-search').css('display')=='none'?$('.box-search').show('fast'):$('.box-search').hide('fast')">-->
+							<!--<i class="fa fa-upload"></i>查询</a>-->
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body table-responsive">
+
+							<div th:if="${result != null}"
+								 class="alert alert-success alert-dismissible"
+								 th:classappend="|alert alert-${result.status==200?'success':'warning'} alert-dismissible|"
+							>
+
+								<!--class="alert alert-${result.status==200?'success':'warning'} alert-dismissible">-->
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+								</button>
+								<h4><i class="icon fa fa-warning"></i>
+									<p th:text="${result.message}"></p></h4>
+							</div>
+							<table id="dataTable" class="table table-hover">
+								<thead>
+								<tr>
+									<th>id</th>
+									<th>昵称</th>
+									<th>账号</th>
+									<th>头像地址</th>
+									<th>邮箱</th>
+									<th>类型</th>
+									<th>更新时间</th>
+									<th>创建时间</th>
+									<th>操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr th:each="user:${users}">
+									<td th:text="${user.id}">1</td>
+									<td th:text="${user.nickname}">1</td>
+									<td th:text="${user.username}">1</td>
+									<td th:text="${user.avatar}">1</td>
+									<td th:text="${user.email}">1</td>
+									<td th:text="${user.type}?'管理员':'普通用户'">1</td>
+									<td th:text="${user.updateTime}">1</td>
+									<td th:text="${user.createTime}">1</td>
+									<td>
+										<!--<a href="#" th:href="@{/users/{id}/input(id=${user.id})}"-->
+										<!--class="ui mini teal basic button">编辑</a>-->
+										<!--<a href="#" th:href="@{/users/{id}/delete(id=${user.id})}"-->
+										<!--class="ui mini red basic button">删除</a>-->
+										<button type="button" class="btn btn-sm btn-default" th:onclick="|select(${user.id})|"><i
+												class="fa fa-search"></i>查看
+										</button>&nbsp;&nbsp;&nbsp;
+										<a th:href="|/back/user/form?id=${user.id}|" type="button"
+										   class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;
+										<button type="button" th:onclick="|del(${user.id})|" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i>删除
+										</button>
+									</td>
+
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	</div>
+
+	<!--版权-->
+	<footer th:include="b/include/copyright"/>
+</div>
+<!--js-->
+<div th:include="b/include/footer"/>
+<script>
+    $('#dataTable').DataTable({
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(有 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        }
+    });
+    function del(id) {
+        $('#modal-title').html("删除用户:"+id);
+        $('#modal-body').html("你确定要删除用户ID:"+id);
+        $('#modal-detail').modal('show');
+        $('#modal-save').bind('click',function (){
+            setTimeout(function () {
+                $.ajax({
+                    "url":"/back/user/delete",
+                    "type":"POST",
+                    "async":false,
+                    "data":{"userId":id},
+                    "dataType":"JSON",
+                    "success":function (data) {
+                        //请求成功
+                        window.location.reload();
+
+                    }
+                })
+            },500);
+
+        });
+    }
+    function select(id) {
+        $.ajax({
+            url: "/back/user/detail?id="+id,
+            type: 'get',
+            dataType: 'html',
+            success: function (data) {
+                $('#modal-body').html(data);
+                $('#modal-detail').modal('show');
+            }
+        });
+    }
+</script>
 </body>
 </html>

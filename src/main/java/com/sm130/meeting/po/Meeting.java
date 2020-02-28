@@ -34,15 +34,15 @@ public class Meeting {
     private String flag;
 //    游览次数
     private Integer views;
-//    赞赏是否开启
+//    未使用，赞赏是否开启
     private boolean appreciation;
-//    版权信息是否开启
+//    发布者信息是否开启
     private boolean shareStatement;
 //    评论是否开启
     private boolean commentabled;
 //    是否发布
     private boolean published;
-//    是否标记
+//    紧急
     private boolean recommend;
     @Temporal(TemporalType.TIMESTAMP)
 //    创建时间

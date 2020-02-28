@@ -36,4 +36,6 @@ public interface MeetingService {
     Meeting updateMeeting(Long id, Meeting meeting);
 
     void deleteMeeting(Long id);
+
+    List<Meeting> getAll();
 }

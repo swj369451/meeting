@@ -36,7 +36,7 @@ public class DetailController {
     @PostMapping("/search")
     public String search(@PageableDefault(size = 8, sort = {"time"}, direction = Sort.Direction.DESC) Pageable pageable,
                          MeetingQuery meeting, Model model,Long typeId) {
-        Page<Detail> list = detailService.listByUserId(pageable,typeId);
+        Page<Detail> list = detailService.listPageByUserId(pageable,typeId);
         model.addAttribute("page", list);
 
         return "admin/detail :: detailList";

@@ -54,7 +54,7 @@ public class IndexController {
 
     @GetMapping("/test")
     public String test() {
-        return "redirect:/back/user/list";
+        return "b/test";
     }
 
     @PostMapping("/search")

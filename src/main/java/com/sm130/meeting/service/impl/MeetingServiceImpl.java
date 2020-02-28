@@ -35,7 +35,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public Meeting getMeeting(Long id) {
-        return meetingRepository.getOne(id);
+        return meetingRepository.findById(id).get();
     }
 
     @Transactional
@@ -171,5 +171,10 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting meeting = meetingRepository.findById(id).get();
         commentService.deleteByMeeting(meeting);
         meetingRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Meeting> getAll() {
+        return meetingRepository.findAll();
     }
 }

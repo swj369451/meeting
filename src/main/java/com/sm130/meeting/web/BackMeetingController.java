@@ -1,8 +1,10 @@
 package com.sm130.meeting.web;
 
 import com.sm130.meeting.po.Detail;
+import com.sm130.meeting.po.Meeting;
 import com.sm130.meeting.po.User;
 import com.sm130.meeting.service.DetailService;
+import com.sm130.meeting.service.MeetingService;
 import com.sm130.meeting.service.UserService;
 import com.sm130.meeting.web.utils.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("back/user")
-public class BackUserController {
+@RequestMapping("back/meeting")
+public class BackMeetingController {
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private DetailService detailService;
+
+    @Autowired
+    private MeetingService meetingService;
 
     @ModelAttribute
     public User getTbUser(Long userId){
@@ -46,9 +51,9 @@ public class BackUserController {
      */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String list(Model model){
-        List<User> users = userService.findAll();
-        model.addAttribute("users",users);
-        return "b/userList";
+        List<Meeting> meetings = meetingService.getAll();
+        model.addAttribute("meetings",meetings);
+        return "b/meetingList";
     }
 
     /**
@@ -56,64 +61,59 @@ public class BackUserController {
      * @return
      */
     @RequestMapping(value = "/form",method = RequestMethod.GET)
-    public String userForm(HttpServletRequest request, Model model){
+    public String meetingForm(HttpServletRequest request, Model model){
         String id = request.getParameter("id");
         if(id!=null){
-            User user = userService.findUser(Long.parseLong(id));
-            model.addAttribute("user",user);
+            Meeting meeting = meetingService.getMeeting(Long.parseLong(id));
+            model.addAttribute("meeting",meeting);
         }
-        return "b/user_form";
+//        todo 编辑显示有问题
+        return "b/meeting_form";
     }
 
     /**
-     * 保存与新增用户
-     * @param user
+     * 保存与新增会议
+     * @param meeting
      * @param model
      * @param redirectAttributes
      * @return
      */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public String save(User user,
+    public String save(Meeting meeting,
                        Model model,
                        RedirectAttributes redirectAttributes){
-        BaseResult baseResult;
-        if(user.getId()==null){
-//            新增
-            baseResult = BaseResult.success("新增用户成功");
-        }else{
-//            修改
-            baseResult = BaseResult.success("修改用户成功");
-        }
-        User save = userService.save(user);
+        BaseResult baseResult = BaseResult.success("更新成功");
+        Meeting save = meetingService.getMeeting(meeting.getId());
+        save.setShareStatement(meeting.isShareStatement());
+        save.setCommentabled(meeting.isCommentabled());
+        save.setPublished(meeting.isPublished());
+        save.setRecommend(meeting.isRecommend());
+        meetingService.saveMeeting(save);
         if(save != null){
 //            保存成功
             redirectAttributes.addFlashAttribute("result",baseResult);
-            return "redirect:/back/user/list";
+            return "redirect:/back/meeting/list";
         }else{
 //            保存失败
-            baseResult = BaseResult.success("新增用户失败");
+            baseResult = BaseResult.success("更新失败");
             model.addAttribute("result",baseResult);
-            model.addAttribute("user",user);
-            return "b/user_form";
+            model.addAttribute("meeting",save);
+            return "b/meeting_form";
         }
     }
 
     /**
      * 删除用户
-     * @param userId
+     * @param id
      * @return
      */
 
     @ResponseBody
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public BaseResult delete(String userId){
-        User user = userService.deleteById(Long.parseLong(userId));
+    public BaseResult delete(String id){
+        meetingService.deleteMeeting(Long.parseLong(id));
         BaseResult baseResult;
-        if(user!=null){
-            baseResult=BaseResult.success("删除成功");
-        }else{
-            baseResult=BaseResult.fail("删除失败");
-        }
+        baseResult=BaseResult.success("删除成功");
         return baseResult;
     }
 

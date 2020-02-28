@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         detailService.save("刪除了<"+user.getNickname()+">");
         userRepository.deleteById(id);
-        return null;
+        return user;
     }
 
     @Override
